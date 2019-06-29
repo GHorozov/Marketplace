@@ -13,6 +13,11 @@ namespace Marketplace.Domain
 
         public string Id { get; set; }
 
+        public DateTime IssuedOn { get; set; }
+
+        public int Quantity { get; set; }
+
+        public string ShippingAddress { get; set; }
 
         public string MarketplaceUserId { get; set; }
         public virtual MarketplaceUser MarketplaceUser { get; set; }

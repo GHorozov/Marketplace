@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Marketplace.Domain
 {
@@ -15,12 +14,9 @@ namespace Marketplace.Domain
             this.Comments = new List<Comment>();
         }
 
-        public string Id { get; set; }
+        public string FirstName { get; set; }
 
-        public string Username { get; set; }
-
-        public string Email { get; set; }
-
+        public string LastName { get; set; }
 
         public virtual List<Product> Products { get; set; }
 

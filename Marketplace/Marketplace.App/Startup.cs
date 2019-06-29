@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Marketplace.App.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Marketplace.Domain;
+using Marketplace.Data;
 
 namespace Marketplace.App
 {
@@ -38,9 +40,11 @@ namespace Marketplace.App
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            //services.AddIdentity<MarketplaceUser, MarketplaceUserRole>()
+            //    .AddDefaultUI()
+            //    .AddEntityFrameworkStores<MarketplaceDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

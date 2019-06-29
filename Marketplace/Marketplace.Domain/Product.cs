@@ -13,6 +13,7 @@ namespace Marketplace.Domain
             this.Pictures = new List<Picture>();
             this.Ratings = new List<Rating>();
             this.Comments = new List<Comment>();
+            this.ShoppingCarts = new List<ShoppingCartProduct>();
         }
 
         public string Id { get; set; }
@@ -20,6 +21,10 @@ namespace Marketplace.Domain
         public string Name { get; set; }
 
         public decimal Price { get; set; }
+
+        public int Quantity { get; set; }
+
+        public DateTime PublishDate { get; set; } = DateTime.UtcNow;
 
         public string Brand { get; set; }
 
@@ -39,5 +44,7 @@ namespace Marketplace.Domain
         public virtual List<Picture> Pictures { get; set; }
 
         public virtual List<Comment> Comments { get; set; }
+
+        public virtual List<ShoppingCartProduct> ShoppingCarts { get; set; }
     }
 }
