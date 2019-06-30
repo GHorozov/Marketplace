@@ -32,18 +32,18 @@ namespace Marketplace.Domain
 
         public string TechnicalSpecifications { get; set; }
 
-        public virtual List<Rating> Ratings { get; set; }
-
         public string MarketplaceUserId { get; set; }
         public virtual MarketplaceUser MarketplaceUser { get; set; }
-
-        public virtual List<ProductOrder> Orders { get; set; }
-
-        public virtual List<CategoryProduct> Categories { get; set; }
 
         public virtual List<Picture> Pictures { get; set; }
 
         public virtual List<Comment> Comments { get; set; }
+
+        public virtual List<Rating> Ratings { get; set; }
+
+        public virtual List<ProductOrder> Orders { get; set; }
+
+        public virtual List<CategoryProduct> Categories { get; set; }
 
         public virtual List<ShoppingCartProduct> ShoppingCarts { get; set; }
     }
