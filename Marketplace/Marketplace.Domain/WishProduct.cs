@@ -6,6 +6,8 @@ namespace Marketplace.Domain
 {
     public class WishProduct
     {
+        public string Id { get; set; }
+
         public string MarketplaceUserId { get; set; }
         public MarketplaceUser MarketplaceUser { get; set; }
 
