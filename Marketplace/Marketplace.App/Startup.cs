@@ -34,7 +34,7 @@ namespace Marketplace.App
                        Configuration.GetConnectionString("DefaultConnection")));
 
             services
-                .AddIdentity<MarketplaceUser, MarketplaceRole>(options =>
+                .AddIdentity<MarketplaceUser, IdentityRole>(options =>
              {
                  options.Password.RequireDigit = false;
                  options.Password.RequireLowercase = false;
@@ -44,7 +44,7 @@ namespace Marketplace.App
                  options.User.RequireUniqueEmail = true;
              })
                 .AddDefaultTokenProviders()
-                .AddDefaultUI()
+                .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<MarketplaceDbContext>();
 
             services.Configure<CookiePolicyOptions>(options =>
