@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Marketplace.Domain
+@using Marketplace.App.Infrastructure
+@inject SignInManager<MarketplaceUser> SignInManager
+@inject UserManager<MarketplaceUser> UserManager
+
+
+<div class="top_bar">
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex flex-row">
+                <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>0883399805</div>
+                <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:fastsales@gmail.com">georgihorozov64@gmail.com</a></div>
+                <div class="top_bar_content ml-auto">
+                    @if (SignInManager.IsSignedIn(this.User))
+                    {
+                        <div class="top_bar_user">
+
+                            @*@if (this.User.IsInRole(CustomRoles.RootAdministrator) || this.User.IsInRole(CustomRoles.Administrator))
+                            {
+                                //to do...
+                            }*@
+
+                            <div><a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a></div>
+
+                            <div>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="top_bar_user">
+                            <div class="user_icon"><img src="images/user.svg" alt=""></div>
+                            <div><a asp-area="Identity" asp-page="/Account/Register">Register</a></div>
+                            <div><a asp-area="Identity" asp-page="/Account/Login"><div><i class="fas fa-sign-in-alt"></i></div> Sign in</a></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

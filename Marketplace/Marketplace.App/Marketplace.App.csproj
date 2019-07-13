@@ -21,4 +21,25 @@
     <ProjectReference Include="..\Marketplace.Services\Marketplace.Services.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Areas\Administrator\Views\Shared\ViewComponents\" />
+    <Folder Include="Components\" />
+    <Folder Include="ViewModels\Home\" />
+    <Folder Include="Views\Shared\ViewComponents\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="Areas\Administrator\Views\Shared\_ValidationScriptsPartial.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Partials\_FooterPartial.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\Shared\Partials\_TopBarPartial.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
