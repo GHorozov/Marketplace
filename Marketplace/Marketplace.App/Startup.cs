@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Marketplace.Domain;
 using Marketplace.Data;
+using Marketplace.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Marketplace.App
 {
@@ -53,6 +55,9 @@ namespace Marketplace.App
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddSingleton<IEmailSender, EmailSender>();
+
 
             services.AddMvc(options =>
             {

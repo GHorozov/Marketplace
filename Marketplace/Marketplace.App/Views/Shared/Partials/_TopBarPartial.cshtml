@@ -14,21 +14,35 @@
                 <div class="top_bar_content ml-auto">
                     @if (SignInManager.IsSignedIn(this.User))
                     {
-                        <div class="top_bar_user">
+                    <div class="top_bar_user">
 
-                            @*@if (this.User.IsInRole(CustomRoles.RootAdministrator) || this.User.IsInRole(CustomRoles.Administrator))
-                            {
-                                //to do...
-                            }*@
+                        @if (this.User.IsInRole(GlobalConstants.RootAdministratorRole) || this.User.IsInRole(GlobalConstants.AdministrotorRole))
+                        {
+                            //to add admin panel button 
 
-                            <div><a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a></div>
+                            <div class="top_bar_user">
+                                <a asp-area="" asp-controller="Profile" asp-action="Index" title="Frofile">Hello, Admin @User.Identity.Name!</a>
+                            </div>
 
-                            <div>
+                            <div class="top_bar_user">
                                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                                 </form>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="top_bar_user">
+                                <a asp-area="" asp-controller="Profile" asp-action="Index" title="Frofile">Hello, @User.Identity.Name!</a>
+                            </div>
+
+                            <div class="top_bar_user">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </div>
+                        }
+                    </div>
                     }
                     else
                     {
