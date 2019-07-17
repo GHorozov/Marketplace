@@ -7,9 +7,7 @@ namespace Marketplace.App.Infrastructure
 {
     public class GlobalConstants
     {
-        public const string RootAdministratorRole = "Administrator";
-        public const string AdministrotorRole = "Administrator";
+        public const string AdministratorRole = "Administrator";
         public const string UserRole = "User";
-
     }
 }

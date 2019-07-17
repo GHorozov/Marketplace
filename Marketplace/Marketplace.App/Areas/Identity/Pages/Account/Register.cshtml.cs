@@ -5,13 +5,13 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Marketplace.Domain;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-//using Marketplace.Services.Interfaces;
-
+using System.Linq;
 
 namespace Marketplace.App.Areas.Identity.Pages.Account
 {
@@ -39,6 +39,8 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public class InputModel
         {
@@ -69,8 +71,15 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-        public void OnGet(string returnUrl = null)
+        public async void OnGet(string returnUrl = null)
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("/Home/Error");
+            }
+
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             ReturnUrl = returnUrl;
         }
 
@@ -85,6 +94,7 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
+                    ShoppingCart = new ShoppingCart()
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

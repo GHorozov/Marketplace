@@ -16,6 +16,8 @@ using Marketplace.Domain;
 using Marketplace.Data;
 using Marketplace.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Net;
+using Marketplace.App.Middlewares.Extensions;
 
 namespace Marketplace.App
 {
@@ -49,6 +51,11 @@ namespace Marketplace.App
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<MarketplaceDbContext>();
 
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownProxies.Add(IPAddress.Any);
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -57,6 +64,13 @@ namespace Marketplace.App
             });
 
             services.AddSingleton<IEmailSender, EmailSender>();
+
+            services.AddAuthentication()
+                .AddGoogle(option =>
+                {
+                    option.ClientId = Configuration["GoogleClientId"];
+                    option.ClientSecret = Configuration["GoogleClientSecret"];
+                });
 
 
             services.AddMvc(options =>
@@ -69,21 +83,10 @@ namespace Marketplace.App
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<MarketplaceDbContext>();
-
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
-
-                //new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-            }
-
-
             if (env.IsDevelopment())
             {
+                app.UseSeedDatabaseMiddleware();
+
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -99,6 +102,7 @@ namespace Marketplace.App
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            
 
             app.UseMvc(routes =>
             {

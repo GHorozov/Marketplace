@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Marketplace.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,9 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<MarketplaceUser> _userManager;
 
-        public ConfirmEmailModel(UserManager<IdentityUser> userManager)
+        public ConfirmEmailModel(UserManager<MarketplaceUser> userManager)
         {
             _userManager = userManager;
         }
@@ -23,7 +24,7 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
         {
             if (userId == null || code == null)
             {
-                return RedirectToPage("/Index");
+                return RedirectToAction("Index", "Home", new { Area = "" });
             }
 
             var user = await _userManager.FindByIdAsync(userId);
@@ -38,7 +39,7 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
                 throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
             }
 
-            return Page();
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
     }
 }

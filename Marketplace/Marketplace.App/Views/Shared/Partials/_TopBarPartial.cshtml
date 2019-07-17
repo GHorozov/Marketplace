@@ -9,40 +9,55 @@
     <div class="container">
         <div class="row">
             <div class="col d-flex flex-row">
-                <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>0883399805</div>
-                <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:fastsales@gmail.com">georgihorozov64@gmail.com</a></div>
+                <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="~/images/phone.png" alt="phone-icon"></div>0883399805</div>
+                <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="~/images/mail.png" alt="mail-icon"></div><a href="/" disabled="disabled">georgihorozov64@gmail.com</a></div>
+
                 <div class="top_bar_content ml-auto">
                     @if (SignInManager.IsSignedIn(this.User))
                     {
-                    <div class="top_bar_user">
+                        <div class="top_bar_user">
 
-                        @if (this.User.IsInRole(GlobalConstants.RootAdministratorRole) || this.User.IsInRole(GlobalConstants.AdministrotorRole))
-                        {
-                            //to add admin panel button 
+                            @if (this.User.IsInRole(GlobalConstants.AdministratorRole))
+                            {
+                                <div class="top_bar_user">
+                                    <form class="form-inline" asp-area="Administrator" asp-controller="Home" asp-action="Index" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button type="submit" class="nav-link btn btn-link text-white bg-success">Control Panel</button>
+                                    </form>
+                                </div>
 
-                            <div class="top_bar_user">
-                                <a asp-area="" asp-controller="Profile" asp-action="Index" title="Frofile">Hello, Admin @User.Identity.Name!</a>
-                            </div>
+                                <div class="top_bar_user">
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" title="Frofile">
+                                    @User.Identity.Name
+                                        <div>
+                                            <div class="top_bar_icon"></div>
+                                            <img src="~/images/user.png" alt="user-icon">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="top_bar_user">
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="top_bar_user">
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" title="Frofile">Hello, @User.Identity.Name!
+                                        <div>
+                                            <div class="top_bar_icon"></div>
+                                            <img src="~/images/user.png" alt="user-icon">
+                                        </div>
+                                    </a>
+                                </div>
 
-                            <div class="top_bar_user">
-                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                </form>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="top_bar_user">
-                                <a asp-area="" asp-controller="Profile" asp-action="Index" title="Frofile">Hello, @User.Identity.Name!</a>
-                            </div>
-
-                            <div class="top_bar_user">
-                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                </form>
-                            </div>
-                        }
-                    </div>
+                                <div class="top_bar_user">
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
                     }
                     else
                     {

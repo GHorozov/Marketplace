@@ -18,6 +18,9 @@ namespace Marketplace.Domain
 
         public string LastName { get; set; }
 
+        public string ShoppingCartId { get; set; }
+        public ShoppingCart ShoppingCart { get; set; }
+
         public virtual List<Product> Products { get; set; }
 
         public virtual List<Order> Orders { get; set; }

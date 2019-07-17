@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Marketplace.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,13 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<MarketplaceUser> _signInManager;
+        private readonly UserManager<MarketplaceUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
+            SignInManager<MarketplaceUser> signInManager,
+            UserManager<MarketplaceUser> userManager,
             ILogger<ExternalLoginModel> logger)
         {
             _signInManager = signInManager;
@@ -114,7 +115,12 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new MarketplaceUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    ShoppingCart = new ShoppingCart()
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

@@ -101,6 +101,8 @@ namespace Marketplace.Data.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("ShoppingCartId");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -115,6 +117,8 @@ namespace Marketplace.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("ShoppingCartId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -409,6 +413,13 @@ namespace Marketplace.Data.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Marketplace.Domain.MarketplaceUser", b =>
+                {
+                    b.HasOne("Marketplace.Domain.ShoppingCart", "ShoppingCart")
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartId");
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Message", b =>
