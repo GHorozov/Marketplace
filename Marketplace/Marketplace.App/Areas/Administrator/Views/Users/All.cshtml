@@ -1,0 +1,40 @@
+﻿@using Marketplace.App.Areas.Administrator.ViewModels.Users
+@model IEnumerable<UserViewModel>
+
+@{
+    ViewData["Title"] = "All users";
+    var count = 1;
+}
+
+<partial name="/Areas/Administrator/Views/Shared/Partials/_AdminNavBarPartial.cshtml" />
+<br />
+<div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr class="text-light bg-warning">
+                <th>#</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@count</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a class="btn bg-danger" asp-area="Administrator" asp-controller="Users" asp-action="Delete?id=@item.Id">Delete</a>
+                    </td>
+                </tr>
+                
+                count++;
+             }
+        </tbody>
+    </table>
+</div>

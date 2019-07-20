@@ -1,0 +1,16 @@
+﻿@using Marketplace.App.Areas.Administrator.ViewModels.Users
+@Model DeleteUserViewModel
+
+@{
+    ViewData["Title"] = "Delete user";
+}
+
+<partial name="/Areas/Administrator/Views/Shared/Partials/_AdminNavBarPartial.cshtml" />
+<br />
+
+<p>Are you sure you want to delete user @Model?</p>
+
+<div class="d-inline-block">
+    <a class="btn btn-block bg-danger" asp-area="Administrator" asp-controller="Users" asp-action="Destroy/@Model.Id">Yes</a>
+    <a class="btn btn-block bg-info" asp-area="Administrator" asp-controller="Users" asp-action="All">No</a>
+</div>

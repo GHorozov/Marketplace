@@ -12,12 +12,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Marketplace.Domain;
 using Marketplace.Data;
 using Marketplace.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Net;
 using Marketplace.App.Middlewares.Extensions;
+using AutoMapper;
+using Marketplace.App.AutoMapperConfigurations;
+using Marketplace.Services.Interfaces;
 
 namespace Marketplace.App
 {
@@ -64,6 +68,14 @@ namespace Marketplace.App
             });
 
             services.AddSingleton<IEmailSender, EmailSender>();
+
+            services.AddAutoMapper(typeof(MarketplaceProfile).Assembly);
+
+            //Add services
+            services.AddTransient<IUserService, UsersService>();
+
+
+
 
             services.AddAuthentication()
                 .AddGoogle(option =>

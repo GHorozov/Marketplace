@@ -6,8 +6,8 @@
 
 <h1 class="mx-auto text-lg-center">@ViewData["Title"]</h1>
 <hr class="mx-auto w-50 hr-2">
-<div class="row mx-auto">
-    <div class="col d-flex justify-content-around">
+<div class="row">
+    <div class="col-md-6 d-lg-block">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -41,11 +41,11 @@
             </div>
         </form>
     </div>
+    <div class="col-md-6 d-lg-block ">
+        <h3 class="text-md-center">External Log in:</h3>
+        <partial name="~/Views/Shared/Partials/_ExternalLoginPartial.cshtml" />
+    </div>
 </div>
-
-<partial name="~/Views/Shared/Partials/_ExternalLoginPartial.cshtml" />
-
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

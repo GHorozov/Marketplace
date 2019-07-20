@@ -1,8 +1,7 @@
-﻿@using Marketplace.App.Areas.Administrator.ViewModels.Home
-@model IndexViewModel
-
-@{
+﻿@{
     ViewData["Title"] = "Administrator panel";
 }
 
-<h1>This is admin panel page!</h1>
+<partial name="/Areas/Administrator/Views/Shared/Partials/_AdminNavBarPartial.cshtml" />
+
+<h1>This is admin panel home page!</h1>
