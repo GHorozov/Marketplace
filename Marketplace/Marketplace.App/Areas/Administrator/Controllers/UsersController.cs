@@ -30,12 +30,14 @@ namespace Marketplace.App.Areas.Administrator.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
-            var userModel = await this.userService.GetUserById<DeleteUserViewModel>(id);
-            if(userModel == null)
+            var user = await this.userService.GetUserById(id);
+            if(user == null)
             {
                 return NotFound();
             }
-           
+
+            var userModel = this.mapper.Map<DeleteUserViewModel>(user);
+            
             return View(userModel);
         }
 
@@ -43,7 +45,64 @@ namespace Marketplace.App.Areas.Administrator.Controllers
         public async Task<IActionResult> Destroy(string id)
         {
             await this.userService.DeleteById(id);
-            return Redirect(nameof(All));
+
+            return  RedirectToAction(nameof(All));
+        }
+
+        [HttpGet]
+        public IActionResult Roles(string id)
+        {
+            var userRoles = this.userService.GetUserRoles(id)
+                .GetAwaiter()
+                .GetResult()
+                .ToList();
+
+            var userRolesModel = new RolesViewModel()
+            {
+                Id = id,
+                Roles = userRoles
+            };
+
+            return this.View(userRolesModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(string id)
+        {
+            var user = await this.userService.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var modelResult = this.mapper.Map<AdminChangePasswordViewModel>(user);
+
+            return View(modelResult);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> ChangePassword(string id, AdminChangePasswordViewModel inputModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            var result = await this.userService.ChangePassword(id, inputModel.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(All));
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View(inputModel);
+            }
         }
     }
 }

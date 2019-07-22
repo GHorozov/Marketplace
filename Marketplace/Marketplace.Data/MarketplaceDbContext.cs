@@ -31,7 +31,7 @@ namespace Marketplace.Data
 
         public DbSet<ShoppingCartProduct> ShoppingCartProduct { get; set; }
 
-        public MarketplaceDbContext(DbContextOptions<MarketplaceDbContext> options) 
+        public MarketplaceDbContext(DbContextOptions<MarketplaceDbContext> options)
             : base(options)
         {
         }
@@ -103,14 +103,14 @@ namespace Marketplace.Data
                 .HasMany(x => x.Orders)
                 .WithOne(x => x.Product)
                 .HasForeignKey(x => x.ProductId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Order>()
                 .HasMany(x => x.Products)
                 .WithOne(x => x.Order)
                 .HasForeignKey(x => x.OrderId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                .Entity<CategoryProduct>()
@@ -121,14 +121,14 @@ namespace Marketplace.Data
                .HasMany(x => x.Products)
                .WithOne(x => x.Category)
                .HasForeignKey(x => x.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Product>()
                 .HasMany(x => x.Categories)
                 .WithOne(x => x.Product)
                 .HasForeignKey(x => x.ProductId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                .Entity<ShoppingCartProduct>()
@@ -139,14 +139,14 @@ namespace Marketplace.Data
                .HasMany(x => x.Products)
                .WithOne(x => x.ShoppingCart)
                .HasForeignKey(x => x.ShoppingCartId)
-                .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Product>()
                 .HasMany(x => x.ShoppingCarts)
                 .WithOne(x => x.Product)
                 .HasForeignKey(x => x.ProductId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             base.OnModelCreating(builder);

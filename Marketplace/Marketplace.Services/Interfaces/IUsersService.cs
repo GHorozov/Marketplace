@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using Marketplace.Domain;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Marketplace.Services.Interfaces
@@ -9,6 +12,10 @@ namespace Marketplace.Services.Interfaces
 
         Task DeleteById(string id);
 
-        Task<TModel> GetUserById<TModel>(string id);
+        Task<MarketplaceUser> GetUserById(string id);
+
+        Task<IEnumerable<string>> GetUserRoles(string id);
+
+        Task<IdentityResult> ChangePassword(string id, string password);
     }
 }

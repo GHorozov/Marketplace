@@ -29,7 +29,9 @@
                     <td>@item.LastName</td>
                     <td>@item.Email</td>
                     <td>
-                        <a class="btn bg-danger" asp-area="Administrator" asp-controller="Users" asp-action="Delete?id=@item.Id">Delete</a>
+                        <a class="btn bg-info" asp-area="Administrator" asp-controller="Users" asp-action="ChangePassword" asp-route-id="@item.Id">Change Password</a>
+                        <a class="btn bg-info" asp-area="Administrator" asp-controller="Users" asp-action="Roles" asp-route-id="@item.Id">Roles</a>
+                        <a class="btn bg-danger" asp-area="Administrator" asp-controller="Users" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
                 
