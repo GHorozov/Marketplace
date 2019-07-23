@@ -69,15 +69,11 @@ namespace Marketplace.App
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
-            //services.AddAutoMapper(typeof(MarketplaceProfile).Assembly);
-            services.AddAutoMapper(cfg => {
-                cfg.AddProfile<MarketplaceProfile>();
-            });
-
+            services.AddAutoMapper(typeof(MarketplaceProfile).Assembly);
 
             //Add services
             services.AddTransient<IUserService, UserService>();
-
+            services.AddTransient<ICategoryService, CategoryService>();
 
 
 
