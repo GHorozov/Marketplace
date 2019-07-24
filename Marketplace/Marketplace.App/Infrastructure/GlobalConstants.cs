@@ -9,5 +9,7 @@ namespace Marketplace.App.Infrastructure
     {
         public const string AdministratorRole = "Administrator";
         public const string UserRole = "User";
+
+        public const string ShoppingCartKey = "%ShoppingCartKey%";
     }
 }
