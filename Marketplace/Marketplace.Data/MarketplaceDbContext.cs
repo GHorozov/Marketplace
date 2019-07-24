@@ -148,6 +148,12 @@ namespace Marketplace.Data
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .Entity<ShoppingCart>()
+                .HasOne(x => x.User)
+                .WithOne(x => x.ShoppingCart)
+                .HasForeignKey<MarketplaceUser>(x => x.ShoppingCartId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

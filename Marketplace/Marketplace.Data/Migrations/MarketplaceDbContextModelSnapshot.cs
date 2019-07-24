@@ -118,7 +118,9 @@ namespace Marketplace.Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("ShoppingCartId");
+                    b.HasIndex("ShoppingCartId")
+                        .IsUnique()
+                        .HasFilter("[ShoppingCartId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -242,6 +244,8 @@ namespace Marketplace.Data.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
@@ -418,8 +422,9 @@ namespace Marketplace.Data.Migrations
             modelBuilder.Entity("Marketplace.Domain.MarketplaceUser", b =>
                 {
                     b.HasOne("Marketplace.Domain.ShoppingCart", "ShoppingCart")
-                        .WithMany()
-                        .HasForeignKey("ShoppingCartId");
+                        .WithOne("User")
+                        .HasForeignKey("Marketplace.Domain.MarketplaceUser", "ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Message", b =>
