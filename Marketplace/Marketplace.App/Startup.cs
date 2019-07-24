@@ -74,7 +74,8 @@ namespace Marketplace.App
             //Add services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
-
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IShoppingCartService, ShoppingCartService>();
 
 
             services.AddAuthentication()
