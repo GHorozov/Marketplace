@@ -12,6 +12,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using Marketplace.Services.Interfaces;
+using Marketplace.App.ViewModels.ShoppingCart;
+using Marketplace.App.Helpers;
+using Marketplace.App.Infrastructure;
 
 namespace Marketplace.App.Areas.Identity.Pages.Account
 {
@@ -22,17 +26,20 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
         private readonly UserManager<MarketplaceUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IShoppingCartService shoppingCartService;
 
         public RegisterModel(
             UserManager<MarketplaceUser> userManager,
             SignInManager<MarketplaceUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IShoppingCartService shoppingCartService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.shoppingCartService = shoppingCartService;
         }
 
         [BindProperty]
@@ -115,7 +122,19 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    //TO DO: Add shopping card products from shoppingcard service
+
+                    var shoppingCart = this.HttpContext.Session
+                                                    .GetObjectFromJson<ShoppingCartViewModel[]>(GlobalConstants.ShoppingCartKey) ??
+                                                new List<ShoppingCartViewModel>().ToArray();
+                    if (shoppingCart != null)
+                    {
+                        foreach (var product in shoppingCart)
+                        {
+                            await this.shoppingCartService.AddProductToShoppingCartAsync(product.Id, this.Input.Email, product.Quantity);
+                        }
+
+                        this.HttpContext.Session.Remove(GlobalConstants.ShoppingCartKey);
+                    }
 
                     return LocalRedirect(returnUrl);
                 }

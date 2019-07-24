@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Marketplace.Domain;
+using Marketplace.App.ViewModels.ShoppingCart;
+using Marketplace.App.Helpers;
+using Marketplace.App.Infrastructure;
+using Marketplace.Services.Interfaces;
 
 namespace Marketplace.App.Areas.Identity.Pages.Account
 {
@@ -18,11 +22,13 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<MarketplaceUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IShoppingCartService shoppingCartService;
 
-        public LoginModel(SignInManager<MarketplaceUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<MarketplaceUser> signInManager, ILogger<LoginModel> logger, IShoppingCartService shoppingCartService)
         {
             _signInManager = signInManager;
             _logger = logger;
+            this.shoppingCartService = shoppingCartService;
         }
 
         [BindProperty]
@@ -77,6 +83,20 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var shoppingCart = this.HttpContext.Session
+                                                     .GetObjectFromJson<ShoppingCartViewModel[]>(GlobalConstants.ShoppingCartKey) ??
+                                                 new List<ShoppingCartViewModel>().ToArray();
+                    if(shoppingCart != null)
+                    {
+                        foreach (var product in shoppingCart)
+                        {
+                            await this.shoppingCartService.AddProductToShoppingCartAsync(product.Id, this.Input.Email, product.Quantity);
+                        }
+
+                        this.HttpContext.Session.Remove(GlobalConstants.ShoppingCartKey);
+                    }
+
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
