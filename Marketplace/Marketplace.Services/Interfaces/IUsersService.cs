@@ -17,5 +17,7 @@ namespace Marketplace.Services.Interfaces
         Task<IEnumerable<string>> GetUserRoles(string id);
 
         Task<IdentityResult> ChangePassword(string id, string password);
+
+        int GetAllWishProductsCount(MarketplaceUser user);
     }
 }

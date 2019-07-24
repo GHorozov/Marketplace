@@ -72,5 +72,17 @@ namespace Marketplace.Services
 
             return result;
         }
+
+        public int GetAllWishProductsCount(MarketplaceUser user)
+        {
+            if(user == null)
+            {
+                return 0;
+            }
+
+            var count = user.WishProducts.Count();
+
+            return count;
+        }
     }
 }
