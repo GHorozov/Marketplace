@@ -258,6 +258,8 @@ namespace Marketplace.Data.Migrations
 
                     b.Property<string>("ProductId");
 
+                    b.Property<int>("Quantity");
+
                     b.HasKey("ShoppingCartId", "ProductId");
 
                     b.HasIndex("ProductId");
