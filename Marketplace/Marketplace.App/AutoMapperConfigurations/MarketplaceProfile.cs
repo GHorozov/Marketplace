@@ -15,10 +15,10 @@ namespace Marketplace.App.AutoMapperConfigurations
             this.CreateMap<MarketplaceUser, UserViewModel>();
             this.CreateMap<MarketplaceUser, DeleteUserViewModel>();
             this.CreateMap<MarketplaceUser, RolesViewModel>();
-            this.CreateMap<MarketplaceUser, AdminChangePasswordViewModel>();
+            this.CreateMap<MarketplaceUser, AdminChangePasswordInputModel>();
 
             this.CreateMap<Category, CategoryViewModel>();
-            this.CreateMap<Category, EditCategoryViewModel>();
+            this.CreateMap<Category, EditCategoryInputModel>();
 
             this.CreateMap<Category, IndexCategoryViewModel>();
             this.CreateMap<ShoppingCartProduct, ShoppingCartProduct>();
