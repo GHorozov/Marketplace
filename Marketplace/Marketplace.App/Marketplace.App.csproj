@@ -14,6 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
 
@@ -28,10 +29,9 @@
     <Folder Include="Areas\Administrator\ViewModels\Home\" />
     <Folder Include="Areas\Administrator\ViewModels\Orders\" />
     <Folder Include="Areas\Administrator\Views\Orders\" />
-    <Folder Include="Components\" />
     <Folder Include="TagHelpers\" />
     <Folder Include="ViewModels\Home\" />
-    <Folder Include="Views\Shared\ViewComponents\" />
+    <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
 
 
