@@ -67,6 +67,12 @@ namespace Marketplace.App
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.IdleTimeout = new TimeSpan(0, 1, 0, 0);
+            });
+
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddAutoMapper(typeof(MarketplaceProfile).Assembly);
@@ -76,6 +82,7 @@ namespace Marketplace.App
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            services.AddTransient<IWishProductService, WishProductService>();
 
 
             services.AddAuthentication()
@@ -113,9 +120,8 @@ namespace Marketplace.App
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSession();
             app.UseAuthentication();
-            
 
             app.UseMvc(routes =>
             {
