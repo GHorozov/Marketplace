@@ -4,6 +4,7 @@ using Marketplace.App.Areas.Administrator.ViewModels.Users;
 using System.Linq;
 using Marketplace.App.Areas.Administrator.ViewModels.Categories;
 using Marketplace.App.ViewModels.Components;
+using Marketplace.App.ViewModels.ShoppingCart;
 
 namespace Marketplace.App.AutoMapperConfigurations
 {
@@ -20,9 +21,7 @@ namespace Marketplace.App.AutoMapperConfigurations
             this.CreateMap<Category, EditCategoryViewModel>();
 
             this.CreateMap<Category, IndexCategoryViewModel>();
-            this.CreateMap<ShoppingCart, IndexShoppingCartViewModel>()
-                .ForMember(isc => isc.ProductCount, sc => sc.MapFrom(x => x.Products.Count()))
-                .ForMember(isc => isc.TotalPrice, sc => sc.MapFrom(x => x.Products.Sum(p => p.Product.Price)));
+            this.CreateMap<ShoppingCartProduct, ShoppingCartProduct>();
         }
     }
 }
