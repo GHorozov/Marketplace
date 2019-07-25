@@ -44,6 +44,22 @@ namespace Marketplace.Data.Migrations
                     b.ToTable("CategoryProduct");
                 });
 
+            modelBuilder.Entity("Marketplace.Domain.Color", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("ProductId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Colors");
+                });
+
             modelBuilder.Entity("Marketplace.Domain.Comment", b =>
                 {
                     b.Property<string>("Id")
@@ -188,8 +204,6 @@ namespace Marketplace.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Brand");
-
                     b.Property<string>("Description");
 
                     b.Property<string>("MarketplaceUserId");
@@ -201,8 +215,6 @@ namespace Marketplace.Data.Migrations
                     b.Property<DateTime>("PublishDate");
 
                     b.Property<int>("Quantity");
-
-                    b.Property<string>("TechnicalSpecifications");
 
                     b.HasKey("Id");
 
@@ -404,6 +416,14 @@ namespace Marketplace.Data.Migrations
 
                     b.HasOne("Marketplace.Domain.Product", "Product")
                         .WithMany("Categories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Marketplace.Domain.Color", b =>
+                {
+                    b.HasOne("Marketplace.Domain.Product", "Product")
+                        .WithMany("Colors")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
