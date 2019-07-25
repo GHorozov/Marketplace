@@ -36,7 +36,8 @@ namespace Marketplace.App.Areas.Administrator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateCategoryViewModel inputModel)
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Create(CreateCategoryInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
@@ -56,13 +57,14 @@ namespace Marketplace.App.Areas.Administrator.Controllers
             {
                 return NotFound();
             }
-            var resultModel = this.mapper.Map<EditCategoryViewModel>(category);
+            var resultModel = this.mapper.Map<EditCategoryInputModel>(category);
 
             return this.View(resultModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(string id, EditCategoryViewModel inputModel)
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Edit(string id, EditCategoryInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {

@@ -75,14 +75,14 @@ namespace Marketplace.App.Areas.Administrator.Controllers
                 return NotFound();
             }
 
-            var modelResult = this.mapper.Map<AdminChangePasswordViewModel>(user);
+            var modelResult = this.mapper.Map<AdminChangePasswordInputModel>(user);
 
             return View(modelResult);
         }
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> ChangePassword(string id, AdminChangePasswordViewModel inputModel)
+        public async Task<IActionResult> ChangePassword(string id, AdminChangePasswordInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
