@@ -9,7 +9,6 @@ namespace Marketplace.Domain
         {
             this.Orders = new List<ProductOrder>();
             this.Categories = new List<CategoryProduct>();
-            this.Colors = new List<Color>();
             this.Pictures = new List<Picture>();
             this.Ratings = new List<Rating>();
             this.Comments = new List<Comment>();
@@ -28,10 +27,11 @@ namespace Marketplace.Domain
 
         public string Description { get; set; }
 
+        public string ColorId { get; set; }
+        public virtual Color Color { get; set; }
+
         public string MarketplaceUserId { get; set; }
         public virtual MarketplaceUser MarketplaceUser { get; set; }
-
-        public virtual List<Color> Colors { get; set; }
 
         public virtual List<Picture> Pictures { get; set; }
 
