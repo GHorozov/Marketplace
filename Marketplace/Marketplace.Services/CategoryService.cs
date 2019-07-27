@@ -47,6 +47,15 @@ namespace Marketplace.Services
             return category;
         }
 
+        public Category GetCategoryByName(string name)
+        {
+            var category = this.context
+                .Categories
+                .SingleOrDefault(x => x.Name == name);
+
+            return category;
+        }
+
         public void Edit(string id, string name)
         {
             var category = this.GetCategoryById(id);
