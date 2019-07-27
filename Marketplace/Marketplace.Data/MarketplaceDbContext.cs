@@ -29,8 +29,6 @@ namespace Marketplace.Data
 
         public DbSet<ProductOrder> ProductOrder { get; set; }
 
-        public DbSet<CategoryProduct> CategoryProduct { get; set; }
-
         public DbSet<ShoppingCartProduct> ShoppingCartProduct { get; set; }
 
         public MarketplaceDbContext(DbContextOptions<MarketplaceDbContext> options)
@@ -103,6 +101,13 @@ namespace Marketplace.Data
               .OnDelete(DeleteBehavior.Restrict);
 
             builder
+              .Entity<Product>()
+              .HasOne(x => x.Category)
+              .WithMany(x => x.Products)
+              .HasForeignKey(x => x.CategoryId)
+              .OnDelete(DeleteBehavior.Restrict);
+
+            builder
                 .Entity<ProductOrder>()
                 .HasKey(x => new { x.ProductId, x.OrderId });
 
@@ -118,24 +123,6 @@ namespace Marketplace.Data
                 .HasMany(x => x.Products)
                 .WithOne(x => x.Order)
                 .HasForeignKey(x => x.OrderId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-               .Entity<CategoryProduct>()
-               .HasKey(x => new { x.CategoryId, x.ProductId });
-
-            builder
-               .Entity<Category>()
-               .HasMany(x => x.Products)
-               .WithOne(x => x.Category)
-               .HasForeignKey(x => x.CategoryId)
-               .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .Entity<Product>()
-                .HasMany(x => x.Categories)
-                .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
