@@ -5,6 +5,7 @@ using System.Linq;
 using Marketplace.App.Areas.Administrator.ViewModels.Categories;
 using Marketplace.App.ViewModels.Components;
 using Marketplace.App.ViewModels.ShoppingCart;
+using Marketplace.App.ViewModels.Products;
 
 namespace Marketplace.App.AutoMapperConfigurations
 {
@@ -19,6 +20,8 @@ namespace Marketplace.App.AutoMapperConfigurations
 
             this.CreateMap<Category, CategoryViewModel>();
             this.CreateMap<Category, EditCategoryInputModel>();
+            this.CreateMap<Category, ProductCategoryViewModel>();
+
 
             this.CreateMap<Category, IndexCategoryViewModel>();
             this.CreateMap<ShoppingCartProduct, ShoppingCartProduct>();
