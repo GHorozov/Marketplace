@@ -12,6 +12,8 @@ namespace Marketplace.Services.Interfaces
 
         Category GetCategoryById(string id);
 
+        Category GetCategoryByName(string name);
+
         void Create(string name);
 
         void Edit(string id, string name);
