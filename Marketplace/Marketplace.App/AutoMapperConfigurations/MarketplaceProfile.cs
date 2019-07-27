@@ -25,6 +25,7 @@ namespace Marketplace.App.AutoMapperConfigurations
 
             this.CreateMap<Category, IndexCategoryViewModel>();
             this.CreateMap<ShoppingCartProduct, ShoppingCartProduct>();
+
         }
     }
 }
