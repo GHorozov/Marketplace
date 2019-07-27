@@ -73,16 +73,16 @@ namespace Marketplace.App
                 options.IdleTimeout = new TimeSpan(0, 1, 0, 0);
             });
 
-            services.AddSingleton<IEmailSender, EmailSender>();
-
             services.AddAutoMapper(typeof(MarketplaceProfile).Assembly);
 
-            //Add services
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
             services.AddTransient<IWishProductService, WishProductService>();
+            services.AddTransient<IColorService, ColorService>();
+            services.AddTransient<IPictureService, PictureService>();
 
 
             services.AddAuthentication()
