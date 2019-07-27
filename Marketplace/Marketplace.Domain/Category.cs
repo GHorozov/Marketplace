@@ -8,13 +8,13 @@ namespace Marketplace.Domain
     {
         public Category()
         {
-            this.Products = new List<CategoryProduct>();
+            this.Products = new List<Product>();
         }
 
         public string Id { get; set; }
 
         public string Name { get; set; }
 
-        public virtual List<CategoryProduct> Products { get; set; }
+        public virtual List<Product> Products { get; set; }
     }
 }

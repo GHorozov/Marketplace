@@ -8,7 +8,6 @@ namespace Marketplace.Domain
         public Product()
         {
             this.Orders = new List<ProductOrder>();
-            this.Categories = new List<CategoryProduct>();
             this.Pictures = new List<Picture>();
             this.Ratings = new List<Rating>();
             this.Comments = new List<Comment>();
@@ -33,6 +32,9 @@ namespace Marketplace.Domain
         public string MarketplaceUserId { get; set; }
         public virtual MarketplaceUser MarketplaceUser { get; set; }
 
+        public string CategoryId { get; set; }
+        public virtual Category Category { get; set; }
+
         public virtual List<Picture> Pictures { get; set; }
 
         public virtual List<Comment> Comments { get; set; }
@@ -40,8 +42,6 @@ namespace Marketplace.Domain
         public virtual List<Rating> Ratings { get; set; }
 
         public virtual List<ProductOrder> Orders { get; set; }
-
-        public virtual List<CategoryProduct> Categories { get; set; }
 
         public virtual List<ShoppingCartProduct> ShoppingCarts { get; set; }
     }
