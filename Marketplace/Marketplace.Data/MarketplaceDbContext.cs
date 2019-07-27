@@ -76,11 +76,10 @@ namespace Marketplace.Data
               .OnDelete(DeleteBehavior.Restrict);
 
             builder
-            .Entity<Product>()
-            .HasMany(x => x.Colors)
-            .WithOne(x => x.Product)
-            .HasForeignKey(x => x.ProductId)
-            .OnDelete(DeleteBehavior.Restrict);
+              .Entity<Product>()
+              .HasOne(x => x.Color)
+              .WithOne()
+              .OnDelete(DeleteBehavior.Restrict);
 
             builder
               .Entity<Product>()

@@ -51,11 +51,7 @@ namespace Marketplace.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("ProductId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Colors");
                 });
@@ -204,6 +200,8 @@ namespace Marketplace.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ColorId");
+
                     b.Property<string>("Description");
 
                     b.Property<string>("MarketplaceUserId");
@@ -217,6 +215,10 @@ namespace Marketplace.Data.Migrations
                     b.Property<int>("Quantity");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ColorId")
+                        .IsUnique()
+                        .HasFilter("[ColorId] IS NOT NULL");
 
                     b.HasIndex("MarketplaceUserId");
 
@@ -420,14 +422,6 @@ namespace Marketplace.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Marketplace.Domain.Color", b =>
-                {
-                    b.HasOne("Marketplace.Domain.Product", "Product")
-                        .WithMany("Colors")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("Marketplace.Domain.Comment", b =>
                 {
                     b.HasOne("Marketplace.Domain.MarketplaceUser", "MarketplaceUser")
@@ -475,6 +469,11 @@ namespace Marketplace.Data.Migrations
 
             modelBuilder.Entity("Marketplace.Domain.Product", b =>
                 {
+                    b.HasOne("Marketplace.Domain.Color", "Color")
+                        .WithOne()
+                        .HasForeignKey("Marketplace.Domain.Product", "ColorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Marketplace.Domain.MarketplaceUser", "MarketplaceUser")
                         .WithMany("Products")
                         .HasForeignKey("MarketplaceUserId")
