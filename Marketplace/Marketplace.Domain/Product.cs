@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Marketplace.Domain
 {
     public class Product
     {
+        private const string PriceMinValue = "0.00";
+        private const string PriceMaxValue = "79228162514264337593543950335";
+
         public Product()
         {
             this.Orders = new List<ProductOrder>();
@@ -18,6 +22,8 @@ namespace Marketplace.Domain
 
         public string Name { get; set; }
 
+        [Required]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         public decimal Price { get; set; }
 
         public int Quantity { get; set; }
