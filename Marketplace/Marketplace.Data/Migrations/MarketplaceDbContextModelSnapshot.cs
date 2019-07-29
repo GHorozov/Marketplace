@@ -38,7 +38,11 @@ namespace Marketplace.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("ProductId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Colors");
                 });
@@ -398,6 +402,13 @@ namespace Marketplace.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Marketplace.Domain.Color", b =>
+                {
+                    b.HasOne("Marketplace.Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Comment", b =>
