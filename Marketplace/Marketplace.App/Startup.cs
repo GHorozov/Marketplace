@@ -38,8 +38,8 @@ namespace Marketplace.App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MarketplaceDbContext>(options =>
-                   options.UseSqlServer(
-                       Configuration.GetConnectionString("DefaultConnection")));
+                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            );
 
             services
                 .AddIdentity<MarketplaceUser, IdentityRole>(options =>
