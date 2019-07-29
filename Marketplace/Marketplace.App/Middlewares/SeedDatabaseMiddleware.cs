@@ -14,7 +14,7 @@ namespace Marketplace.App.Middlewares
     {
         private const string ADMIN_FIRST_NAME = "Georgi";
         private const string ADMIN_LAST_NAME = "Horozov";
-        private const string ADMIN_EMAIL = "georgihorozov64@gmail.com";
+        private const string ADMIN_EMAIL = "admin@gmail.com";
         private const string ADMIN_PASSWORD = "123123";
 
         private readonly RequestDelegate _next;
