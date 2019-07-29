@@ -6,6 +6,7 @@ using Marketplace.App.Areas.Administrator.ViewModels.Categories;
 using Marketplace.App.ViewModels.Components;
 using Marketplace.App.ViewModels.ShoppingCart;
 using Marketplace.App.ViewModels.Products;
+using Marketplace.App.ViewModels.Home;
 
 namespace Marketplace.App.AutoMapperConfigurations
 {
@@ -21,11 +22,19 @@ namespace Marketplace.App.AutoMapperConfigurations
             this.CreateMap<Category, CategoryViewModel>();
             this.CreateMap<Category, EditCategoryInputModel>();
             this.CreateMap<Category, ProductCategoryViewModel>();
-
+            this.CreateMap<Category, HomeCategoryViewModel>();
 
             this.CreateMap<Category, IndexCategoryViewModel>();
+
             this.CreateMap<ShoppingCartProduct, ShoppingCartProduct>();
 
+            this.CreateMap<Product, DetailsProductViewModel>();
+
+            this.CreateMap<Product, HomeProductViewModel>()
+                .ForMember(hpvm => hpvm.PictureUrl, x => x.MapFrom(p => p.Pictures.FirstOrDefault().PictureUrl));
+
+            this.CreateMap<Product, AllProductViewModel>()
+                .ForMember(apvm => apvm.Picture, x => x.MapFrom(p => p.Pictures.First()));
         }
     }
 }
