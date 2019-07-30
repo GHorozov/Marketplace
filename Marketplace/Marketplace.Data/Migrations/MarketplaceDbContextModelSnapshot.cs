@@ -31,22 +31,6 @@ namespace Marketplace.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Marketplace.Domain.Color", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("ProductId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Colors");
-                });
-
             modelBuilder.Entity("Marketplace.Domain.Comment", b =>
                 {
                     b.Property<string>("Id")
@@ -173,8 +157,6 @@ namespace Marketplace.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
-
                     b.Property<string>("PictureUrl");
 
                     b.Property<string>("ProductId");
@@ -193,7 +175,7 @@ namespace Marketplace.Data.Migrations
 
                     b.Property<string>("CategoryId");
 
-                    b.Property<string>("ColorId");
+                    b.Property<string>("Color");
 
                     b.Property<string>("Description");
 
@@ -210,10 +192,6 @@ namespace Marketplace.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ColorId")
-                        .IsUnique()
-                        .HasFilter("[ColorId] IS NOT NULL");
 
                     b.HasIndex("MarketplaceUserId");
 
@@ -404,13 +382,6 @@ namespace Marketplace.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Marketplace.Domain.Color", b =>
-                {
-                    b.HasOne("Marketplace.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("Marketplace.Domain.Comment", b =>
                 {
                     b.HasOne("Marketplace.Domain.MarketplaceUser", "MarketplaceUser")
@@ -461,11 +432,6 @@ namespace Marketplace.Data.Migrations
                     b.HasOne("Marketplace.Domain.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Marketplace.Domain.Color", "Color")
-                        .WithOne()
-                        .HasForeignKey("Marketplace.Domain.Product", "ColorId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Marketplace.Domain.MarketplaceUser", "MarketplaceUser")

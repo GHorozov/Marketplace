@@ -17,8 +17,6 @@ namespace Marketplace.Data
 
         public DbSet<Message> Messages { get; set; }
 
-        public DbSet<Color> Colors { get; set; }
-
         public DbSet<Picture> Pictures { get; set; }
 
         public DbSet<Rating> Ratings { get; set; }
@@ -71,12 +69,6 @@ namespace Marketplace.Data
               .HasMany(x => x.Comments)
               .WithOne(x => x.MarketplaceUser)
               .HasForeignKey(x => x.MarketplaceUserId)
-              .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-              .Entity<Product>()
-              .HasOne(x => x.Color)
-              .WithOne()
               .OnDelete(DeleteBehavior.Restrict);
 
             builder
