@@ -42,18 +42,21 @@ namespace Marketplace.App
             );
 
             services
-                .AddIdentity<MarketplaceUser, IdentityRole>(options =>
-             {
-                 options.Password.RequireDigit = false;
-                 options.Password.RequireLowercase = false;
-                 options.Password.RequireUppercase = false;
-                 options.Password.RequireNonAlphanumeric = false;
-                 options.Password.RequiredLength = 6;
-                 options.User.RequireUniqueEmail = true;
-             })
-                .AddDefaultTokenProviders()
+                .AddIdentity<MarketplaceUser, IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<MarketplaceDbContext>();
+                .AddEntityFrameworkStores<MarketplaceDbContext>()
+                .AddDefaultTokenProviders();
+
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+                options.User.RequireUniqueEmail = true;
+            });
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -81,7 +84,6 @@ namespace Marketplace.App
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
             services.AddTransient<IWishProductService, WishProductService>();
-            services.AddTransient<IColorService, ColorService>();
             services.AddTransient<IPictureService, PictureService>();
 
 
@@ -103,20 +105,11 @@ namespace Marketplace.App
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseSeedDatabaseMiddleware();
 
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
+            app.UseDeveloperExceptionPage();
+            app.UseDatabaseErrorPage();
+            app.UseHsts();
+            app.UseSeedDatabaseMiddleware();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
