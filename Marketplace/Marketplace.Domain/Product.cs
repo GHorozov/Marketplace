@@ -32,8 +32,7 @@ namespace Marketplace.Domain
 
         public string Description { get; set; }
 
-        public string ColorId { get; set; }
-        public virtual Color Color { get; set; }
+        public string Color { get; set; }
 
         public string MarketplaceUserId { get; set; }
         public virtual MarketplaceUser MarketplaceUser { get; set; }
