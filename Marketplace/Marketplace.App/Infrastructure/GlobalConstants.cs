@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Marketplace.App.Infrastructure
+﻿namespace Marketplace.App.Infrastructure
 {
     public class GlobalConstants
     {
@@ -16,6 +11,6 @@ namespace Marketplace.App.Infrastructure
         public const string PriceMinValue = "0.00";
         public const string PriceMaxValue = "79228162514264337593543950335";
 
-        public const string DefaultPicturesPath = @"C:\GitHub\Marketplace\Marketplace\Marketplace.App\wwwroot\images\";
+        public const string DefaultPicturesPath = @"C:\GitHub\Marketplace\Marketplace\Marketplace.App\wwwroot\images\pictures\";
     }
 }
