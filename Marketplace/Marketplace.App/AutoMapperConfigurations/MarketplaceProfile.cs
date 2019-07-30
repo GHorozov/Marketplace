@@ -29,7 +29,7 @@ namespace Marketplace.App.AutoMapperConfigurations
             this.CreateMap<ShoppingCartProduct, ShoppingCartProduct>();
 
             this.CreateMap<Product, DetailsProductViewModel>();
-
+            this.CreateMap<Product, MyProductViewModel>();
             this.CreateMap<Product, HomeProductViewModel>()
                 .ForMember(hpvm => hpvm.PictureUrl, x => x.MapFrom(p => p.Pictures.FirstOrDefault().PictureUrl));
 
