@@ -28,13 +28,17 @@ namespace Marketplace.App.AutoMapperConfigurations
 
             this.CreateMap<ShoppingCartProduct, ShoppingCartProduct>();
 
-            this.CreateMap<Product, DetailsProductViewModel>();
+            this.CreateMap<Product, DetailsProductViewModel>()
+                .ForMember(dpvm => dpvm.CategoryName, x => x.MapFrom(p => p.Category.Name))
+                .ForMember(dpvm => dpvm.ProductName, x => x.MapFrom(p => p.Name));
+                
+
             this.CreateMap<Product, MyProductViewModel>();
             this.CreateMap<Product, HomeProductViewModel>()
-                .ForMember(hpvm => hpvm.PictureUrl, x => x.MapFrom(p => p.Pictures.FirstOrDefault().PictureUrl));
+                .ForMember(hpvm => hpvm.PictureUrl, x => x.MapFrom(p => p.Pictures.First().PictureUrl));
 
             this.CreateMap<Product, AllProductViewModel>()
-                .ForMember(apvm => apvm.Picture, x => x.MapFrom(p => p.Pictures.First()));
+                .ForMember(apvm => apvm.Picture, x => x.MapFrom(p => p.Pictures.First().PictureUrl));
         }
     }
 }
