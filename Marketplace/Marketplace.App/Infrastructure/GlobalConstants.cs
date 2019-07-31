@@ -11,6 +11,6 @@
         public const string PriceMinValue = "0.00";
         public const string PriceMaxValue = "79228162514264337593543950335";
 
-        public const string DefaultPicturesPath = @"C:\GitHub\Marketplace\Marketplace\Marketplace.App\wwwroot\images\pictures\";
+        public const string DefaultPicturesPath = "wwwroot/images/users/";
     }
 }
