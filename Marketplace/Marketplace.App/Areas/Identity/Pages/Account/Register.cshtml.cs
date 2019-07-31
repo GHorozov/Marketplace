@@ -95,6 +95,8 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
+                var isAnyUsers = !_userManager.Users.Any();
+
                 var user = new MarketplaceUser
                 {
                     UserName = Input.Email,
@@ -119,6 +121,15 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    if (isAnyUsers)
+                    {
+                        await _userManager.AddToRoleAsync(user, GlobalConstants.AdministratorRole);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, GlobalConstants.UserRole);
+                    }
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
