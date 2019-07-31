@@ -3,10 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Marketplace.Data;
 using Marketplace.Domain;
 using Marketplace.Services.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Marketplace.Services
 {
