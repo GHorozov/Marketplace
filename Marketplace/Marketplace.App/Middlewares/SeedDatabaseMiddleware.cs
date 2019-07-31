@@ -1,10 +1,7 @@
 ﻿using Marketplace.Data;
 using Marketplace.Domain;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,6 +45,7 @@ namespace Marketplace.App.Middlewares
 
                 await userManager.CreateAsync(user, ADMIN_PASSWORD);
                 await userManager.AddToRoleAsync(user, Infrastructure.GlobalConstants.AdministratorRole);
+                await dbContext.SaveChangesAsync();
             }
 
             // Call the next delegate/middleware in the pipeline
