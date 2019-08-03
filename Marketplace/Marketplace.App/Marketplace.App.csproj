@@ -29,7 +29,6 @@
     <Folder Include="Areas\Administrator\ViewModels\Orders\" />
     <Folder Include="Areas\Administrator\Views\Orders\" />
     <Folder Include="TagHelpers\" />
-    <Folder Include="Views\ShoppingCart\" />
     <Folder Include="wwwroot\images\users\" />
   </ItemGroup>
 
