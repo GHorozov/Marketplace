@@ -106,6 +106,8 @@ namespace Marketplace.App.Areas.Identity.Pages.Account
                     ShoppingCart = new ShoppingCart()
                 };
 
+                user.ShoppingCart.UserId = user.Id;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
