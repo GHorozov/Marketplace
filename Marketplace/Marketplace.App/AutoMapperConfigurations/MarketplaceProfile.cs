@@ -46,7 +46,14 @@ namespace Marketplace.App.AutoMapperConfigurations
                 
 
             //ShoppingCart
-            this.CreateMap<ShoppingCartProduct, ShoppingCartProduct>();
+            this.CreateMap<Product, ShoppingCartViewModel>();
+            this.CreateMap<ShoppingCartProduct, ShoppingCartViewModel>()
+                .ForMember(scvm => scvm.Id, x => x.MapFrom(p => p.Product.Id))
+                .ForMember(scvm => scvm.PictureUrl, x => x.MapFrom(p => p.Product.Pictures.First().PictureUrl))
+                .ForMember(scvm => scvm.Name, x => x.MapFrom(p => p.Product.Name))
+                .ForMember(scvm => scvm.Color, x => x.MapFrom(p => p.Product.Color))
+                .ForMember(scvm => scvm.Price, x => x.MapFrom(p => p.Product.Price));
+                
         }
     }
 }
