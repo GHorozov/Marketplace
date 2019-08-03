@@ -43,6 +43,8 @@ namespace Marketplace.App.Middlewares
                     ShoppingCart = new ShoppingCart()
                 };
 
+                user.ShoppingCart.UserId = user.Id;
+
                 await userManager.CreateAsync(user, ADMIN_PASSWORD);
                 await userManager.AddToRoleAsync(user, Infrastructure.GlobalConstants.AdministratorRole);
                 await dbContext.SaveChangesAsync();
