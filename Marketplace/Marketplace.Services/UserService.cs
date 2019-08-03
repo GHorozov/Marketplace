@@ -47,8 +47,14 @@ namespace Marketplace.Services
 
         public async Task<MarketplaceUser> GetUserById(string id)
         {
-            var user = await this.userManager
-                .FindByIdAsync(id);
+            var user = await this.context
+                .Users
+                .Where(x => x.Id == id)
+                .Include(x => x.ShoppingCart)
+                .Include(x => x.Products)
+                .Include(x => x.Orders)
+                .Include(x => x.WishProducts)
+                .SingleOrDefaultAsync();
 
             return user;
         }
