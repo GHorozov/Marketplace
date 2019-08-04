@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CategoryViewModel>
+
+@{
+    this.ViewData["Title"] = "Categories";
+    var count = 1;
+}
+
+<partial name="/Areas/Administrator/Views/Shared/Partials/_AdminNavBarPartial.cshtml" />
+<br/>
+
+<div>
+    <a class="btn bg-info" asp-area="Administrator" asp-controller="Categories" asp-action="Create">Create new</a>
+</div>
+
+@if (!Model.Any())
+{
+    <h2>No categories available.</h2>
+}
+else
+{
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr class="text-light bg-warning">
+                <th>#</th>
+                <th>Category Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@count</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <a class="btn bg-info" asp-area="Administrator" asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    </td>
+                </tr>
+
+                count++;
+            }
+        </tbody>
+    </table>
+}
+
+

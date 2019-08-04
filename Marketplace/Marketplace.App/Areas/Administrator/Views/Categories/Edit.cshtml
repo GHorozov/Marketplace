@@ -1,0 +1,31 @@
+﻿@model EditCategoryInputModel
+
+@{
+    this.ViewData["Title"] = "Edit Category";
+}
+
+<partial name="/Areas/Administrator/Views/Shared/Partials/_AdminNavBarPartial.cshtml" />
+<br />
+
+<h1 class="mx-auto text-lg-center">Edit category</h1>
+<hr class="mx-auto w-50 hr-2">
+<div class="row">
+    <div class="col-md-6 d-lg-block">
+        <form asp-route-returnUrl="@Model" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Name"></label>
+                <input asp-for="@Model.Name" class="form-control" placeholder="Name" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+            <div class="d-lg-inline-flex">
+                <button type="submit" class="btn btn-primary btn-lg">Edit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
