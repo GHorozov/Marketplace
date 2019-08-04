@@ -85,6 +85,7 @@ namespace Marketplace.App
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
             services.AddTransient<IWishProductService, WishProductService>();
             services.AddTransient<IPictureService, PictureService>();
+            services.AddTransient<IOrderService, OrderService>();
 
 
             services.AddAuthentication()
