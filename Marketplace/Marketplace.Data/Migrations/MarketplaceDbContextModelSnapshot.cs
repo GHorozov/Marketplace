@@ -141,6 +141,8 @@ namespace Marketplace.Data.Migrations
 
                     b.Property<string>("MarketplaceUserId");
 
+                    b.Property<string>("Phone");
+
                     b.Property<int>("Quantity");
 
                     b.Property<string>("ShippingAddress");
