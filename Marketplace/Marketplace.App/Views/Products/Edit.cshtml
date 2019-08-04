@@ -1,0 +1,69 @@
+﻿@model EditProductInputModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@await Component.InvokeAsync(typeof(MainHeaderViewComponent))
+@await Component.InvokeAsync(typeof(MainNavigationMenuViewComponent))
+
+<br />
+<h1 class="mx-auto text-lg-center">Edit product</h1>
+<hr class="mx-auto w-50 hr-2">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3 text-center">
+            <form class="form-inlin justify-content-center" asp-controller="Products" asp-action="Edit" enctype="multipart/form-data" method="post">
+
+                <div class="form-group">
+                    <label asp-for="@Model.Name" class="control-label"></label>
+                    <input asp-for="@Model.Name" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Quantity" class="control-label"></label>
+                    <input asp-for="@Model.Quantity" class="form-control" />
+                    <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Price" class="control-label"></label>
+                    <input asp-for="@Model.Price" class="form-control" />
+                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Color" class="control-label"></label>
+                    <input asp-for="@Model.Color" class="form-control" type="color" value="#ff0000" />
+                    <span asp-validation-for="@Model.Color" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Description" class="control-label"></label>
+                    <textarea asp-for="@Model.Description" class="form-control" placeholder="Description"></textarea>
+                    <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.CategoryName" class="control-label"></label>
+                    <select asp-for="@Model.CategoryName" class="form-control" asp-items="@Model.Categories"></select>
+                    <span asp-validation-for="@Model.CategoryName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Picture" class="control-label"></label>
+                    <input asp-for="@Model.Picture" class="form-control" multiple />
+                    <span asp-validation-for="@Model.Picture" class="text-danger"></span>
+                </div>
+
+                <div class="btn-group d-flex justify-content-center mt-1">
+                    <button type="submit" class="btn btn-primary btn-lg">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

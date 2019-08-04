@@ -1,0 +1,99 @@
+﻿@model DetailsProductViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+@await Component.InvokeAsync(typeof(MainHeaderViewComponent))
+@await Component.InvokeAsync(typeof(MainNavigationMenuViewComponent))
+
+<!-- Single Product -->
+
+@*@if (this.ViewData["Quantity"] != null)
+{
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div>this.ViewData["Quantity"]</div>
+    </div>
+}*@
+
+<div class="single_product">
+    <div class="container">
+        <div class="row">
+
+            <!-- Images -->
+            <div class="col-lg-2 order-lg-1 order-2">
+                <ul class="image_list">
+                    @foreach (var item in Model.Pictures)
+                    {
+                        <li data-image="@item.PictureUrl"><img src="@item.PictureUrl" alt=""></li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Selected Image -->
+            <div class="col-lg-5 order-lg-2 order-1">
+                <div class="image_selected"><img src="images/single_4.jpg" alt=""></div>
+            </div>
+
+            <!-- Description -->
+            <div class="col-lg-5 order-3">
+                <div class="product_description">
+                    <div class="product_category">@Model.CategoryName</div>
+                    <div class="product_name">@Model.ProductName</div>
+                    <div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="product_text"><p>@Model.Description</p></div>
+                    <div class="order_info d-flex flex-row">
+                        <form method="post" asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id" asp-route-quantity="@Model.Quantity">
+                           
+                            <input type="hidden" value="@Model.Id" />
+
+                            <div class="clearfix" style="z-index: 1000;">
+                                <!-- Product Quantity -->
+                                <div class="">
+                                    <span>Available quantity: @Model.Quantity</span>
+                                </div>
+                                <div class="product_quantity clearfix">
+                                    <span>Quantity: </span>
+                                    <input id="quantity_input" asp-for="@Model.Quantity" type="text" pattern="[0-9]*" value="1">
+                                    <div class="quantity_buttons">
+                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                    </div>
+                                </div>
+
+                                <!-- Product Color -->
+                            </div>
+
+                            <div class="product_price">$@Model.Price.ToString("f2")</div>
+                            <div class="button_container">
+                                <button type="submit" class="button cart_button">Add to Cart</button>
+                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @if (this.User.Identity.IsAuthenticated && Model.IsMyProduct)
+        {
+            <div class="row mx-auto">
+                <div class="col-lg-2">
+                    <div class="button_container d-inline-flex">
+                        <div><a class="btn bg-primary  text-white  mr-1" asp-area="" asp-controller="Products" asp-action="AddPicture" asp-route-id="@Model.Id">Add picture</a></div>
+                        <div><a class="btn bg-primary text-white  mr-1" asp-area="" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.Id">Edit Product</a></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    $(#quantity_input).get()
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

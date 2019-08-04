@@ -1,0 +1,35 @@
+﻿@model AddPictureProductInputModel
+@{
+    ViewData["Title"] = "Add picture";
+}
+
+@await Component.InvokeAsync(typeof(MainHeaderViewComponent))
+@await Component.InvokeAsync(typeof(MainNavigationMenuViewComponent))
+
+<br />
+<h1 class="mx-auto text-lg-center">Add Picture</h1>
+<hr class="mx-auto w-50 hr-2">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3 text-center">
+            <form method="post" asp-controller="Products" asp-action="AddPicture" enctype="multipart/form-data">
+
+                <div class="form-group mz-auto w-45">
+                    <div class="d-flex justify-content-start">
+                        <label asp-for="@Model.Picture" class="text-primary"></label>
+                    </div>
+                    <input asp-for="@Model.Picture" class="form-control-file" multiple />
+                    <span asp-validation-for="@Model.Picture" class="text-danger"></span>
+                </div>
+
+                <div class="btn-group d-flex justify-content-center mt-1">
+                    <button type="submit" class="btn btn-primary btn-lg">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
