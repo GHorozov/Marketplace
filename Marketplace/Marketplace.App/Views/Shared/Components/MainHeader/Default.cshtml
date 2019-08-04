@@ -1,0 +1,80 @@
+﻿@model MainHeaderViewModel
+@{
+    ViewData["Title"] = "Main header";
+}
+
+<header class="header">
+    <div class="header_main">
+        <div class="container">
+            <div class="row">
+
+                <!-- Logo -->
+                <div class="col-lg-3 col-sm-3 col-3 order-1">
+                    <div class="logo_container">
+                        <div class="logo"><a asp-controller="Home" asp-action="Index">Marketplace</a></div>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+                    <div class="header_search">
+                        <div class="header_search_content">
+                            <div class="header_search_form_container">
+                                <form class="header_search_form clearfix">
+                                    <input type="search" required="required" class="header_search_input" placeholder="Search for products...">
+                                    <div class="custom_dropdown">
+                                        <div class="custom_dropdown_list">
+                                            <span class="custom_dropdown_placeholder clc">All Categories</span>
+                                            <i class="fas fa-chevron-down"></i>
+                                            <ul class="custom_list clc">
+                                                @foreach (var category in Model.ListCategories)
+                                                {
+                                                    <li><a class="clc" asp-area="" asp-controller="Products" asp-action="Search" asp-route-id="@category.CategoryId">@category.Name</a></li> @*to do: add link*@
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="header_search_button trans_300" value="Submit"><img src="~/images/search.png" alt=""></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wishlist -->
+                <div class="col-lg-3 col-9 order-lg-3 order-2 text-lg-left text-right">
+                    <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
+                        <div class="wishlist d-flex flex-row align-items-center justify-content-end">
+                            <div class="wishlist_icon"><img src="~/images/heart.png" alt=""></div>
+                            <div class="wishlist_content">
+                                <div class="wishlist_text"><a href="#">Wishlist</a></div> @*to do: add link*@
+                                @if (this.User.Identity.IsAuthenticated)
+                                {
+                                    <div class="wishlist_count">@Model.WishListCount</div>
+                                }
+                                else
+                                {
+                                    <div class="wishlist_count">0</div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Cart -->
+                        <div class="cart">
+                            <div class="cart_container d-flex flex-row align-items-center justify-content-end">
+                                <div class="cart_icon">
+                                    <img src="~/images/cart.png" alt="">
+                                    <div class="cart_count"><span>@Model.ShoppingCartProductCount</span></div>
+                                </div>
+                                <div class="cart_content">
+                                    <div class="cart_text"><a asp-controller="ShoppingCart" asp-action="Cart">Cart</a></div> 
+                                    <div class="cart_price">$@Model.ShoppingCartTotalPrice</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

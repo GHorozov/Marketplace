@@ -1,0 +1,75 @@
+﻿@model MainNavigationMenuViewModel
+@{
+    ViewData["Title"] = "Main navigation menu";
+}
+
+<header class="header_main">
+    <nav class="main_nav">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                    <div class="main_nav_content d-flex flex-row">
+
+                        <!-- Categories Menu -->
+
+                        <div class="cat_menu_container">
+                            <div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
+                                <div class="cat_burger"><span></span><span></span><span></span></div>
+                                <div class="cat_menu_text">categories</div>
+                            </div>
+
+                            <ul class="cat_menu">
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <li><a asp-area="" asp-controller="Categories" asp-action="Search" asp-route-id="@category.CategoryId">@category.Name<i class="fas fa-chevron-right ml-auto"></i></a></li> @*to do: add link*@
+                                }
+                            </ul>
+                        </div>
+
+                        <!-- Main Nav Menu -->
+
+                        <div class="main_nav_menu ml-auto">
+                            <ul class="standard_dropdown main_nav_dropdown">
+                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home<i class="fas fa-chevron-down"></i></a></li>
+
+                                @if (this.User.Identity.IsAuthenticated)
+                                {
+                                    <li class="hassubs">
+                                        <a href="#">Products<i class="fas fa-chevron-down"></i></a>
+                                        <ul>
+                                            <li><a asp-area="" asp-controller="Products" asp-action="Create">Create Product<i class="fas fa-chevron-down"></i></a></li>
+                                            <li><a asp-area="" asp-controller="Products" asp-action="My">MyProducts<i class="fas fa-chevron-down"></i></a></li>
+                                            <li><a asp-area="" asp-controller="Products" asp-action="All">AllProducts<i class="fas fa-chevron-down"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="hassubs">
+                                        <a href="#">Orders<i class="fas fa-chevron-down"></i></a>
+                                        <ul>
+                                            <li><a asp-area="" asp-controller="Orders" asp-action="My">MyOrders<i class="fas fa-chevron-down"></i></a></li> @*to do: add link*@
+                                            <li><a asp-area="" asp-controller="Orders" asp-action="ActiveOrders">ActiveOrders<i class="fas fa-chevron-down"></i></a></li> @*to do: add link*@
+                                        </ul>
+                                    </li>
+                                }
+
+                                <li><a asp-area="" asp-controller="Contact" asp-action="Index">Contact<i class="fas fa-chevron-down"></i></a></li> @*to do: add link*@
+                            </ul>
+                        </div>
+
+                        <!-- Menu Trigger -->
+
+                        <div class="menu_trigger_container ml-auto">
+                            <div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
+                                <div class="menu_burger">
+                                    <div class="menu_trigger_text">menu</div>
+                                    <div class="cat_burger menu_burger_inner"><span></span><span></span><span></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
