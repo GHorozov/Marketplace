@@ -1,0 +1,39 @@
+﻿@model OrderCreateInputModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+@await Component.InvokeAsync(typeof(MainHeaderViewComponent))
+@await Component.InvokeAsync(typeof(MainNavigationMenuViewComponent))
+
+<br />
+<h1 class="mx-auto text-lg-center">Checkout</h1>
+<hr class="mx-auto w-50 hr-2">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3 text-center">
+            <form method="post" asp-controller="Orders" asp-action="Create">
+
+                <div class="form-group">
+                    <label asp-for="@Model.Phone" class="control-label"></label>
+                    <input asp-for="@Model.Phone" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.ShippingAddress" class="control-label"></label>
+                    <input asp-for="@Model.ShippingAddress" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="@Model.ShippingAddress" class="text-danger"></span>
+                </div>
+
+                <div class="btn-group d-flex justify-content-center mt-1">
+                    <button type="submit" class="btn btn-primary btn-lg">Finish order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
