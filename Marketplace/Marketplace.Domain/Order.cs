@@ -19,6 +19,8 @@ namespace Marketplace.Domain
 
         public string ShippingAddress { get; set; }
 
+        public string Phone { get; set; }
+
         public string MarketplaceUserId { get; set; }
         public virtual MarketplaceUser MarketplaceUser { get; set; }
 
