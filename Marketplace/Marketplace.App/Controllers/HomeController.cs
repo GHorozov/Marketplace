@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Marketplace.Services.Interfaces;
 using Marketplace.App.ViewModels.Home;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace Marketplace.App.Controllers
 {
@@ -30,19 +31,28 @@ namespace Marketplace.App.Controllers
         {
             var categories = this.categoryService.GetAllCategories<HomeCategoryViewModel>().ToList();
             var products = this.productService.GetAllProducts<HomeProductViewModel>().ToList();
-            
+
             var resultModel = new HomeIndexViewModel()
             {
-                 Categories = categories,
-                 Products = products
+                Categories = categories,
+                Products = products
             };
 
             return this.View(resultModel);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<IActionResult> Search(HomeSearchInputModel inputModel)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            //var resultModel = this.productService.GetProductsBy
+
+
+            return this.View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

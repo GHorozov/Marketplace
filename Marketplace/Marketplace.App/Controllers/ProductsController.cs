@@ -101,14 +101,18 @@ namespace Marketplace.App.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
-            var product = this.productService.GetProductById(id);
+            var product = await this.productService.GetProductById(id);
             if (product == null)
             {
                 return NotFound();
             }
             
             var resultModel = this.mapper.Map<DetailsProductViewModel>(product);
-            var user = await this.userManager.GetUserAsync(this.User);
+            var user = await this.userManager.GetUserAsync(HttpContext.User);
+            if(user == null)
+            {
+                return this.View(resultModel);
+            }
             resultModel.IsMyProduct = product.MarketplaceUserId == user.Id ? true : false;
 
             return this.View(resultModel);
@@ -159,9 +163,9 @@ namespace Marketplace.App.Controllers
         }
 
         [Authorize]
-        public IActionResult AddPicture(string id)
+        public async Task<IActionResult> AddPicture(string id)
         {
-            var product = productService.GetProductById(id);
+            var product = await this.productService.GetProductById(id);
             if (product == null)
             {
                 return NotFound();
