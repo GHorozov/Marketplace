@@ -7,7 +7,7 @@
 @await Component.InvokeAsync(typeof(MainNavigationMenuViewComponent))
 
 <div class="home">
-    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="~/images/shop_background.jpg"></div>
+    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/shop_background.jpg"></div>
     <div class="home_overlay"></div>
     <div class="home_content d-flex flex-column align-items-center justify-content-center">
         <h2 class="home_title">Products</h2>
@@ -18,34 +18,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-
                 <!-- Shop Sidebar -->
-                <div class="shop_sidebar">
-                    <div class="sidebar_section">
-                        <div class="sidebar_title">Categories</div>
-                        <ul class="sidebar_categories">
-                            <li><a href="#">Computers & Laptops</a></li>
-                            <li><a href="#">Cameras & Photos</a></li>
-                            <li><a href="#">Hardware</a></li>
-                            <li><a href="#">Smartphones & Tablets</a></li>
-                            <li><a href="#">TV & Audio</a></li>
-                            <li><a href="#">Gadgets</a></li>
-                            <li><a href="#">Car Electronics</a></li>
-                            <li><a href="#">Video Games & Consoles</a></li>
-                            <li><a href="#">Accessories</a></li>
-                        </ul>
-                    </div>
-                    <div class="sidebar_section filter_by_section">
-                        <div class="sidebar_title">Filter By</div>
-                        <div class="sidebar_subtitle">Price</div>
-                        <div class="filter_price">
-                            <div id="slider-range" class="slider_range"></div>
-                            <p>Range: </p>
-                            <p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
-                        </div>
-                    </div>
-                </div>
-
+                @await Component.InvokeAsync(typeof(SideBarViewComponent))
             </div>
 
             <div class="col-lg-9">
@@ -76,15 +50,33 @@
                         @foreach (var item in @Model)
                         {
                             <!-- Product Item -->
-                            <div class="product_item is_new">
-                                <div class="product_border"></div>
-                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="@item.Picture" alt="picture"></div>
-                                <div class="product_content">
-                                    <div class="product_price">$@item.Price</div>
-                                    <div class="product_name"><div><a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0">@item.Name</a></div></div>
+                            @if (@item.IsNew)
+                            {
+                                <div class="product_item is_new">
+                                    <div class="product_border"></div>
+                                    <div><a class="product_image d-flex flex-column align-items-center justify-content-center" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0"><img src="@item.Picture" alt="picture"></a></div>
+                                    <div class="product_content">
+                                        <div class="product_price">$@item.Price</div>
+                                        <div class="product_name"><div><a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0">@item.Name</a></div></div>
+                                    </div>
+                                    <a asp-controller="WishList" asp-action="Add" asp-route-id="@item.Id"><div class="product_fav"><i class="fas fa-heart"></i></div></a>
+                                    <ul class="product_marks">
+                                        <li class="product_mark product_new">new</li>
+                                    </ul>
                                 </div>
-                                <div class="product_fav"><i class="fas fa-heart"></i></div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="product_item">
+                                    <div class="product_border"></div>
+                                    <div><a class="product_image d-flex flex-column align-items-center justify-content-center" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0"><img src="@item.Picture" alt="picture"></a></div>
+                                    <div class="product_content">
+                                        <div class="product_price">$@item.Price</div>
+                                        <div class="product_name"><div><a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0">@item.Name</a></div></div>
+                                    </div>
+                                    <a asp-controller="WishList" asp-action="Add" asp-route-id="@item.Id"><div class="product_fav"><i class="fas fa-heart"></i></div></a>
+                                </div>
+                            }
                         }
                     </div>
 
@@ -101,9 +93,7 @@
                         </ul>
                         <div class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
