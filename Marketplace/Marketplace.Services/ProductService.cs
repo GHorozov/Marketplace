@@ -33,7 +33,7 @@ namespace Marketplace.Services
 
         public async Task<bool> EditPicturePath(string productId, string url)
         {
-            var product = this.GetProductById(productId);
+            var product = await this.GetProductById(productId);
             if (product == null)
             {
                 return false;
@@ -51,7 +51,7 @@ namespace Marketplace.Services
 
         public async Task<bool> AddPicturePath(string productId, string url)
         {
-            var product = this.GetProductById(productId);
+            var product = await this.GetProductById(productId);
             if (product == null)
             {
                 return false;
@@ -65,23 +65,23 @@ namespace Marketplace.Services
             return result > 0;
         }
 
-        public Product GetProductById(string id)
+        public async Task<Product> GetProductById(string id)
         {
-            var product = this.context
+            var product = await this.context
                 .Products
                 .Include(x => x.Category)
                 .Include(x => x.Pictures)
                 .Include(x => x.Comments)
                 .Include(x => x.Ratings)
                 .Where(x => x.Id == id)
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
             return product;
         }
 
         public async Task<bool> AddCategory(string productId, Category category)
         {
-            var product = this.GetProductById(productId);
+            var product = await this.GetProductById(productId);
             if (product == null)
             {
                 return false;
@@ -128,6 +128,17 @@ namespace Marketplace.Services
             var result = products.ProjectTo<TModel>(mapper.ConfigurationProvider);
 
             return result;
+        }
+
+        public IQueryable<TModel> GetProductsByCategoryId<TModel>(string categoryId)
+        {
+            var products = this.context
+                .Products
+                .Include(x => x.Category)
+                .Where(x => x.CategoryId == categoryId)
+                .ProjectTo<TModel>(mapper.ConfigurationProvider);
+
+            return products;
         }
     }
 }
