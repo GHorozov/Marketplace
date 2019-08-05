@@ -1,0 +1,26 @@
+﻿@model SideBarViewModel
+@{
+    ViewData["Title"] = "SideBar";
+}
+
+<div class="shop_sidebar">
+    <div class="sidebar_section">
+        <div class="sidebar_title">Categories</div>
+        <ul class="sidebar_categories">
+            @foreach (var category in Model.Categories)
+            {
+                <li><a class="clc" asp-area="" asp-controller="Categories" asp-action="Category" asp-route-id="@category.CategoryId" asp-route-name="@category.Name">@category.Name</a></li>
+            }
+        </ul>
+    </div>
+    <div class="sidebar_section filter_by_section">
+        <div class="sidebar_title">Filter By</div>
+        <div class="sidebar_subtitle">Price</div>
+        <div class="filter_price">
+            <div id="slider-range" class="slider_range"></div>
+            <p>Range: </p>
+            <p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
+        </div>
+    </div>
+</div>
+

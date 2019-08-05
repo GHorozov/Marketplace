@@ -22,7 +22,7 @@
                             <ul class="cat_menu">
                                 @foreach (var category in Model.Categories)
                                 {
-                                    <li><a asp-area="" asp-controller="Categories" asp-action="Search" asp-route-id="@category.CategoryId">@category.Name<i class="fas fa-chevron-right ml-auto"></i></a></li> @*to do: add link*@
+                                    <li><a asp-area="" asp-controller="Categories" asp-action="Category" asp-route-id="@category.CategoryId" asp-route-name="@category.Name">@category.Name<i class="fas fa-chevron-right ml-auto"></i></a></li> @*to do: add link*@
                                 }
                             </ul>
                         </div>

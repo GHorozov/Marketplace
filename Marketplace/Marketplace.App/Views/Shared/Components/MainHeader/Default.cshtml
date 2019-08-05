@@ -20,8 +20,8 @@
                     <div class="header_search">
                         <div class="header_search_content">
                             <div class="header_search_form_container">
-                                <form class="header_search_form clearfix">
-                                    <input type="search" required="required" class="header_search_input" placeholder="Search for products...">
+                                <form method="post" class="header_search_form clearfix" asp-controller="Home" asp-action="Search">
+                                    <input type="search" name="input" required="required" class="header_search_input" placeholder="Search for products...">
                                     <div class="custom_dropdown">
                                         <div class="custom_dropdown_list">
                                             <span class="custom_dropdown_placeholder clc">All Categories</span>
@@ -29,12 +29,12 @@
                                             <ul class="custom_list clc">
                                                 @foreach (var category in Model.ListCategories)
                                                 {
-                                                    <li><a class="clc" asp-area="" asp-controller="Products" asp-action="Search" asp-route-id="@category.CategoryId">@category.Name</a></li> @*to do: add link*@
+                                                    <a asp-controller="Home" asp-action="Search" asp-route-id="@category.CategoryId"><li class="clc" >@category.Name</li></a>
                                                 }
                                             </ul>
                                         </div>
                                     </div>
-                                    <button type="submit" class="header_search_button trans_300" value="Submit"><img src="~/images/search.png" alt=""></button>
+                                    <button type="submit" class="header_search_button trans_300" value="Submit"><img src="~/images/search.png" alt="search"></button>
                                 </form>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                         <div class="wishlist d-flex flex-row align-items-center justify-content-end">
                             <div class="wishlist_icon"><img src="~/images/heart.png" alt=""></div>
                             <div class="wishlist_content">
-                                <div class="wishlist_text"><a href="#">Wishlist</a></div> @*to do: add link*@
+                                <div class="wishlist_text"><a asp-controller="WishList" asp-action="All">Wishlist</a></div>
                                 @if (this.User.Identity.IsAuthenticated)
                                 {
                                     <div class="wishlist_count">@Model.WishListCount</div>
@@ -67,7 +67,7 @@
                                     <div class="cart_count"><span>@Model.ShoppingCartProductCount</span></div>
                                 </div>
                                 <div class="cart_content">
-                                    <div class="cart_text"><a asp-controller="ShoppingCart" asp-action="Cart">Cart</a></div> 
+                                    <div class="cart_text"><a asp-controller="ShoppingCart" asp-action="Cart">Cart</a></div>
                                     <div class="cart_price">$@Model.ShoppingCartTotalPrice</div>
                                 </div>
                             </div>
