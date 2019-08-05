@@ -16,6 +16,8 @@
         public const int ProductDescriptionMinLenght = 30;
         public const int ProductDescriptionMaxLenght = 300;
 
+        public const int LessThanDaysIsNew = 3;
+
         public const string DefaultPicturesPath = "wwwroot/images/users/";
     }
 }
