@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Marketplace.Data;
 using Marketplace.Domain;
 using Marketplace.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Marketplace.Services

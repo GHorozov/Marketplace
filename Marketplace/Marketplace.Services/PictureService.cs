@@ -14,10 +14,9 @@ namespace Marketplace.Services
             this.productService = productService;
         }
 
-
         public async Task<string> SavePicture(string productId, IFormFile picture, string defaultPicturesPath)
         {
-            var product = this.productService.GetProductById(productId);
+            var product =await this.productService.GetProductById(productId);
 
             var path = defaultPicturesPath + $"{product.PublishDate.Year}-{picture.FileName}";
 

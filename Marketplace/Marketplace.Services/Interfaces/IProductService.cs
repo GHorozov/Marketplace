@@ -12,7 +12,7 @@ namespace Marketplace.Services.Interfaces
 
         Task<bool> EditPicturePath(string productId, string url);
 
-        Product GetProductById(string id);
+        Task<Product> GetProductById(string id);
 
         Task<bool> AddCategory(string productId, Category category);
 
@@ -21,5 +21,7 @@ namespace Marketplace.Services.Interfaces
         Task<Product> EditProduct(Product product);
 
         IQueryable<TModel> GetMyProducts<TModel>(string userId);
+
+        IQueryable<TModel> GetProductsByCategoryId<TModel>(string categoryId);
     }
 }
