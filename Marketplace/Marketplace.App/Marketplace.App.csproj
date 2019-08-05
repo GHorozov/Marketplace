@@ -7,6 +7,10 @@
     <StartupObject>Marketplace.App.Program</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Views\Products\Details.cshtml~RF3047237.TMP" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.1" />
