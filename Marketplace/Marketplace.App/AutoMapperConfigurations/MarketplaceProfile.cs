@@ -51,6 +51,8 @@ namespace Marketplace.App.AutoMapperConfigurations
             this.CreateMap<Product, CategoriesProductViewModel>()
                 .ForMember(cpvm => cpvm.Picture, x => x.MapFrom(p => p.Pictures.First().PictureUrl));
 
+            this.CreateMap<Product, HomeSearchViewModel>()
+                .ForMember(hsvm => hsvm.Picture, x => x.MapFrom(p => p.Pictures.First().PictureUrl));
 
             //ShoppingCart
             this.CreateMap<Product, ShoppingCartViewModel>();
