@@ -9,6 +9,6 @@ namespace Marketplace.App.ViewModels.Home
     {
         public string Input { get; set; }
 
-        public string CategoryId { get; set; }
+        public string CategoryName { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Marketplace.Domain;
+﻿using Marketplace.App.Infrastructure;
+using Marketplace.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,9 @@ namespace Marketplace.App.ViewModels.Home
         public decimal Price { get; set; }
 
         public string PictureUrl { get; set; }
+
+        public DateTime PublishDate { get; set; }
+
+        public bool IsNew => DateTime.UtcNow.Subtract(this.PublishDate).Days < GlobalConstants.LessThanDaysIsNew;
     }
 }
