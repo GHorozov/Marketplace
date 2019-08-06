@@ -9,6 +9,7 @@ using Marketplace.Services.Interfaces;
 using Marketplace.App.ViewModels.Home;
 using AutoMapper;
 using System.Threading.Tasks;
+using Marketplace.App.Infrastructure;
 
 namespace Marketplace.App.Controllers
 {
@@ -27,32 +28,46 @@ namespace Marketplace.App.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var categories = this.categoryService.GetAllCategories<HomeCategoryViewModel>().ToList();
             var products = this.productService.GetAllProducts<HomeProductViewModel>().ToList();
 
             var resultModel = new HomeIndexViewModel()
             {
-                Categories = categories,
                 Products = products
             };
 
             return this.View(resultModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Search(HomeSearchInputModel inputModel)
+        [HttpGet]
+        public IActionResult Search(HomeSearchInputModel inputModel)
         {
-            if (!ModelState.IsValid)
+            this.ViewData["ProductsHead"] = GlobalConstants.HeadTextForFoundResult;
+            if (inputModel.Input == string.Empty && inputModel.CategoryName == GlobalConstants.SearchCategoryDefaultValue)
             {
-                return this.RedirectToAction(nameof(Index));
+                return this.Redirect(nameof(Index));
+            }
+            else if(inputModel.Input != string.Empty && inputModel.CategoryName != GlobalConstants.SearchCategoryDefaultValue)
+            {
+                var resultModel = this.productService.GetProductByInputAndCategoryName<HomeSearchViewModel>(inputModel.Input, inputModel.CategoryName).ToList();
+
+                return this.View(resultModel);
+            }
+            else if (inputModel.Input != string.Empty)
+            {
+                var resultModel = this.productService.GetProductByInput<HomeSearchViewModel>(inputModel.Input, inputModel.CategoryName).ToList();
+
+                return this.View(resultModel);
+            }
+            else if (inputModel.CategoryName != GlobalConstants.SearchCategoryDefaultValue)
+            {
+                var resultModel = this.productService.GetProductByCategoryName<HomeSearchViewModel>(inputModel.Input, inputModel.CategoryName).ToList();
+
+                return this.View(resultModel);
             }
 
-            //var resultModel = this.productService.GetProductsBy
-
-
-            return this.View();
+            return this.View(new List<HomeSearchViewModel>());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
