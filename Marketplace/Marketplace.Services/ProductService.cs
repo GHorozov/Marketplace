@@ -102,7 +102,7 @@ namespace Marketplace.Services
                .Include(x => x.Category)
                .Include(x => x.Pictures)
                .Include(x => x.ShoppingCarts);
-               
+
 
             var result = products.ProjectTo<TModel>(mapper.ConfigurationProvider);
 
@@ -139,6 +139,38 @@ namespace Marketplace.Services
                 .ProjectTo<TModel>(mapper.ConfigurationProvider);
 
             return products;
+        }
+
+        public IQueryable<TModel> GetProductByInputAndCategoryName<TModel>(string input, string categoryName)
+        {
+            var result = this.context
+               .Products
+               .Include(x => x.Category)
+               .Where(x => x.Name.Contains(input, System.StringComparison.CurrentCultureIgnoreCase) && x.Category.Name.ToLower() == categoryName.ToLower())
+               .ProjectTo<TModel>(mapper.ConfigurationProvider);
+
+            return result;
+        }
+
+        public IQueryable<TModel> GetProductByInput<TModel>(string input, string categoryName)
+        {
+            var result = this.context
+               .Products
+               .Where(x => x.Name.Contains(input, System.StringComparison.CurrentCultureIgnoreCase))
+               .ProjectTo<TModel>(mapper.ConfigurationProvider);
+
+            return result;
+        }
+
+        public IQueryable<TModel> GetProductByCategoryName<TModel>(string input, string categoryName)
+        {
+            var result = this.context
+               .Products
+               .Include(x => x.Category)
+               .Where(x => x.Category.Name.ToLower() == categoryName.ToLower())
+               .ProjectTo<TModel>(mapper.ConfigurationProvider);
+
+            return result;
         }
     }
 }
