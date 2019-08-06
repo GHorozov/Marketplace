@@ -1,22 +1,21 @@
 ﻿@model HomeIndexViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Search";
 }
 
 @await Component.InvokeAsync(typeof(MainHeaderViewComponent))
 @await Component.InvokeAsync(typeof(MainNavigationMenuViewComponent))
 
-
 <div class="banner">
     <div class="banner_background" style="background-image:url(images/banner_background.jpg)"></div>
     <div class="container fill_height">
         <div class="row fill_height">
-            <div class="banner_product_image"><img src="images/banner_product.png" alt=""></div>
+            <div class="banner_product_image"><img src="~/images/banner_product.png" alt=""></div>
             <div class="col-lg-5 offset-lg-4 fill_height">
                 <div class="banner_content">
                     <h1 class="banner_text">new era of smartphones</h1>
-                    <div class="banner_price"><span>$530</span>$460</div>
-                    <div class="banner_product_name">Apple Iphone 6s</div>
+                    <div class="banner_price"><span>$1500</span>$1250</div>
+                    <div class="banner_product_name">Apple iPhone X</div>
                     <div class="button banner_button"><a asp-controller="Products" asp-action="All">Shop Now</a></div>
                 </div>
             </div>
@@ -24,58 +23,12 @@
     </div>
 </div>
 
-
 <div class="shop">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-
                 <!-- Shop Sidebar -->
-                <div class="shop_sidebar">
-                    <div class="sidebar_section">
-                        <div class="sidebar_title">Categories</div>
-                        <ul class="sidebar_categories">
-                            @foreach (var category in Model.Categories)
-                            {
-                                <li><a class="clc" asp-area="" asp-controller="Categories" asp-action="Search" asp-route-id="@category.Id">@category.Name</a></li> 
-                            }
-                        </ul>
-                    </div>
-                    <div class="sidebar_section filter_by_section">
-                        <div class="sidebar_title">Filter By</div>
-                        <div class="sidebar_subtitle">Price</div>
-                        <div class="filter_price">
-                            <div id="slider-range" class="slider_range"></div>
-                            <p>Range: </p>
-                            <p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
-                        </div>
-                    </div>
-                    <div class="sidebar_section">
-                        <div class="sidebar_subtitle color_subtitle">Color</div>
-                        <ul class="colors_list">
-                            <li class="color"><a href="#" style="background: #b19c83;"></a></li>
-                            <li class="color"><a href="#" style="background: #000000;"></a></li>
-                            <li class="color"><a href="#" style="background: #999999;"></a></li>
-                            <li class="color"><a href="#" style="background: #0e8ce4;"></a></li>
-                            <li class="color"><a href="#" style="background: #df3b3b;"></a></li>
-                            <li class="color"><a href="#" style="background: #ffffff; border: solid 1px #e1e1e1;"></a></li>
-                        </ul>
-                    </div>
-                    <div class="sidebar_section">
-                        <div class="sidebar_subtitle brands_subtitle">Brands</div>
-                        <ul class="brands_list">
-                            <li class="brand"><a href="#">Apple</a></li>
-                            <li class="brand"><a href="#">Beoplay</a></li>
-                            <li class="brand"><a href="#">Google</a></li>
-                            <li class="brand"><a href="#">Meizu</a></li>
-                            <li class="brand"><a href="#">OnePlus</a></li>
-                            <li class="brand"><a href="#">Samsung</a></li>
-                            <li class="brand"><a href="#">Sony</a></li>
-                            <li class="brand"><a href="#">Xiaomi</a></li>
-                        </ul>
-                    </div>
-                </div>
-
+                @await Component.InvokeAsync(typeof(SideBarViewComponent))
             </div>
 
             <div class="col-lg-9">
@@ -84,7 +37,7 @@
 
                 <div class="shop_content">
                     <div class="shop_bar clearfix">
-                        <div class="shop_product_count"><span>@Model.Products.Count</span> products found</div>
+                        <div class="shop_product_count"><span>@Model.Products.ToList().Count</span> products found</div>
                         <div class="shop_sorting">
                             <span>Sort by:</span>
                             <ul>
@@ -103,24 +56,37 @@
                     <div class="product_grid">
                         <div class="product_grid_border"></div>
 
-                        @foreach (var product in Model.Products)
+                        @foreach (var item in @Model.Products)
                         {
                             <!-- Product Item -->
-                            <div class="product_item is_new">
-                                <div class="product_border"></div>
-                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="@product.PictureUrl" alt="picture"></div>
-                                <div class="product_content">
-                                    <div class="product_price">$@product.Price</div>
-                                    <div class="product_name"><div><a href="#" tabindex="0">@product.Name</a></div></div>
+                            @if (@item.IsNew)
+                            {
+                                <div class="product_item is_new">
+                                    <div class="product_border"></div>
+                                    <div><a class="product_image d-flex flex-column align-items-center justify-content-center" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0"><img src="@item.PictureUrl" alt="picture"></a></div>
+                                    <div class="product_content">
+                                        <div class="product_price">$@item.Price</div>
+                                        <div class="product_name"><div><a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0">@item.Name</a></div></div>
+                                    </div>
+                                    <a asp-controller="WishList" asp-action="Add" asp-route-id="@item.Id"><div class="product_fav"><i class="fas fa-heart"></i></div></a>
+                                    <ul class="product_marks">
+                                        <li class="product_mark product_new">new</li>
+                                    </ul>
                                 </div>
-                                <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                <ul class="product_marks">
-                                    <li class="product_mark product_discount">-25%</li>
-                                    <li class="product_mark product_new">new</li>
-                                </ul>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="product_item">
+                                    <div class="product_border"></div>
+                                    <div><a class="product_image d-flex flex-column align-items-center justify-content-center" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0"><img src="@item.PictureUrl" alt="picture"></a></div>
+                                    <div class="product_content">
+                                        <div class="product_price">$@item.Price</div>
+                                        <div class="product_name"><div><a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" tabindex="0">@item.Name</a></div></div>
+                                    </div>
+                                    <a asp-controller="WishList" asp-action="Add" asp-route-id="@item.Id"><div class="product_fav"><i class="fas fa-heart"></i></div></a>
+                                </div>
+                            }
                         }
-
                     </div>
 
                     <!-- Shop Page Navigation -->
@@ -136,11 +102,10 @@
                         </ul>
                         <div class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+
 
