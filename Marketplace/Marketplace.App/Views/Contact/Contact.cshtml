@@ -1,0 +1,49 @@
+﻿@model ContactInputModel
+@{
+    this.ViewData["Title"] = "Contact";
+}
+
+@await Component.InvokeAsync(typeof(MainHeaderViewComponent))
+@await Component.InvokeAsync(typeof(MainNavigationMenuViewComponent))
+
+<partial name="~/Views/Shared/Partials/_ContactInfoPartial.cshtml" />
+
+<!-- Contact Form -->
+
+<div class="contact_form">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="contact_form_container">
+                    <div class="contact_form_title">Get in Touch</div>
+
+                    <form method="post" id="contact_form" asp-controller="Contact" asp-action="Contact">
+                        <div class="contact_form_inputs d-flex flex-md-row flex-column justify-content-between align-items-between">
+                            <input type="text" asp-for="@Model.Name" id="contact_form_name" class="contact_form_name input_field" placeholder="Your name" required="required" data-error="Name is required.">
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+
+                            <input type="text" asp-for="@Model.Email" id="contact_form_email" class="contact_form_email input_field" placeholder="Your email" required="required" data-error="Email is required.">
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+
+                            <input type="text" asp-for="@Model.Phone" id="contact_form_phone" class="contact_form_phone input_field" placeholder="Your phone number">
+                            <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                        </div>
+                        <div class="contact_form_text">
+                            <textarea asp-for="@Model.Message" id="contact_form_message" class="text_field contact_form_message" name="message" rows="4" placeholder="Message" required="required" data-error="Please, write us a message."></textarea>
+                            <span asp-validation-for="@Model.Message" class="text-danger"></span>
+                        </div>
+                        <div class="contact_form_button">
+                            <button type="submit" class="button contact_submit_button">Send Message</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
