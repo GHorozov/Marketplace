@@ -8,9 +8,13 @@ namespace Marketplace.Domain
     {
         public string Id { get; set; }
 
-        public string Title { get; set; }
+        public string Name { get; set; }
 
-        public string Content { get; set; }
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public string MessageContent { get; set; }
 
         public DateTime IssuedOn { get; set; } = DateTime.UtcNow;
 
