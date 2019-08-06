@@ -1,6 +1,13 @@
 ﻿@model MainHeaderViewModel
+
 @{
-    ViewData["Title"] = "Main header";
+    this.ViewData["Title"] = "Main header";
+    var items = new List<SelectListItem>();
+    items.Add(new SelectListItem() { Text = "All Categories"});
+    foreach (var category in Model.ListCategories)
+    {
+        items.Add(new SelectListItem() { Text = category.Name });
+    }
 }
 
 <header class="header">
@@ -20,18 +27,13 @@
                     <div class="header_search">
                         <div class="header_search_content">
                             <div class="header_search_form_container">
-                                <form method="post" class="header_search_form clearfix" asp-controller="Home" asp-action="Search">
+                                <form method="get" class="header_search_form clearfix" asp-controller="Home" asp-action="Search">
                                     <input type="search" name="input" required="required" class="header_search_input" placeholder="Search for products...">
                                     <div class="custom_dropdown">
                                         <div class="custom_dropdown_list">
                                             <span class="custom_dropdown_placeholder clc">All Categories</span>
                                             <i class="fas fa-chevron-down"></i>
-                                            <ul class="custom_list clc">
-                                                @foreach (var category in Model.ListCategories)
-                                                {
-                                                    <a asp-controller="Home" asp-action="Search" asp-route-id="@category.CategoryId"><li class="clc" >@category.Name</li></a>
-                                                }
-                                            </ul>
+                                            <select class="custom_list clc form-control" name="CategoryName" asp-items="@items"></select>
                                         </div>
                                     </div>
                                     <button type="submit" class="header_search_button trans_300" value="Submit"><img src="~/images/search.png" alt="search"></button>
@@ -78,3 +80,7 @@
         </div>
     </div>
 </header>
+
+
+
+
