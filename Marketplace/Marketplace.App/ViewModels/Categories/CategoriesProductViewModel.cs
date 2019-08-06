@@ -1,8 +1,5 @@
 ﻿using Marketplace.App.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Marketplace.App.ViewModels.Categories
 {
