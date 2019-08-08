@@ -23,7 +23,6 @@ namespace Marketplace.App.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var allCategories = this.categoryService.GetAllCategories<IndexCategoryViewModel>().ToList();
-
             var resultModel = new MainNavigationMenuViewModel()
             {
                 Categories = allCategories
