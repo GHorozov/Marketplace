@@ -10,7 +10,7 @@
 <div>
     <h3>Are you sure you want to delete permanently user @Model.Email?</h3>
 
-    <div class="d-inline-flex">
+    <div class="btn-group d-inline-flex">
         <a class="btn btn-block bg-danger mr-5" asp-area="Administrator" asp-controller="Users" asp-action="Destroy" asp-route-id="@Model.Id">Yes</a>
         <br/>
         <a class="btn btn-block bg-info mr-5" asp-area="Administrator" asp-controller="Users" asp-action="All">No</a>
