@@ -28,7 +28,7 @@ namespace Marketplace.App.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var products = this.productService.GetAllProducts<HomeProductViewModel>().ToList();
 
