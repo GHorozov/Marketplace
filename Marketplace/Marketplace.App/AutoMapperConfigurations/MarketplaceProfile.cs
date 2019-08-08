@@ -9,6 +9,8 @@ using Marketplace.App.ViewModels.Products;
 using Marketplace.App.ViewModels.Home;
 using Marketplace.App.ViewModels.WishList;
 using Marketplace.App.ViewModels.Categories;
+using Marketplace.App.Areas.Administrator.ViewModels.Messages;
+using Marketplace.App.Areas.Administrator.ViewModels.Orders;
 
 namespace Marketplace.App.AutoMapperConfigurations
 {
@@ -67,6 +69,16 @@ namespace Marketplace.App.AutoMapperConfigurations
             this.CreateMap<Product, WishListProductViewModel>()
                 .ForMember(scvm => scvm.PictureUrl, x => x.MapFrom(p => p.Pictures.First().PictureUrl));
 
+            //Messages
+            this.CreateMap<Message, AdminMessageViewModel>()
+                .ForMember(amvm => amvm.Message, x => x.MapFrom(m => m.MessageContent));
+
+            this.CreateMap<Message, AdminMessageReadViewModel>()
+               .ForMember(amvm => amvm.Message, x => x.MapFrom(m => m.MessageContent));
+
+            //Orders
+            this.CreateMap<Order, AdminOrderViewModel>()
+                .ForMember(aovm => aovm.Email, x => x.MapFrom(u => u.MarketplaceUser.Email));
         }
     }
 }
