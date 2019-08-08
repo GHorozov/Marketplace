@@ -1,0 +1,48 @@
+﻿@model IEnumerable<AdminMessageViewModel>
+@{
+    this.ViewData["Title"] = "Messages";
+    var count = 1;
+}
+
+<partial name="/Areas/Administrator/Views/Shared/Partials/_AdminNavBarPartial.cshtml" />
+
+@if (!Model.Any())
+{
+    <div class="text-center"><h2>No new messages!</h2></div>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr class="text-light bg-warning">
+                <th>#</th>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Phome</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@count</td>
+                    <td>@item.IssuedOn.ToShortDateString()</td>
+                    <td>@item.Name</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a class="btn bg-primary" asp-area="Administrator" asp-controller="Messages" asp-action="Read" asp-route-id="@item.Id">Read</a>
+                        <a class="btn bg-primary" asp-area="Administrator" asp-controller="Messages" asp-action="MarkAsRead" asp-route-id="@item.Id">Mark as read</a>
+                        <a class="btn bg-danger" asp-area="Administrator" asp-controller="Messages" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+
+                count++;
+            }
+        </tbody>
+    </table>
+}
+
+

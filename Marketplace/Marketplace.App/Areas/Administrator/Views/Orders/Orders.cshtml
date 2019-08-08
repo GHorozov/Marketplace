@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AdminOrderViewModel>
+@{
+    this.ViewData["Title"] = "Orders";
+    var count = 1;
+}
+
+<partial name="/Areas/Administrator/Views/Shared/Partials/_AdminNavBarPartial.cshtml" />
+
+@if (!Model.Any())
+{
+    <div class="text-center"><h2>No orders available!</h2></div>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr class="text-light bg-warning">
+                <th>#</th>
+                <th>OrderId</th>
+                <th>Order Date</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@count</td>
+                    <td>@item.Id</td>
+                    <td>@item.IssuedOn.ToShortDateString()</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a class="btn bg-primary" asp-area="Administrator" asp-controller="Orders" asp-action="ViewOrder" asp-route-id="@item.Id">View</a>
+                    </td>
+                </tr>
+
+                count++;
+            }
+        </tbody>
+    </table>
+}
