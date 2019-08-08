@@ -30,8 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administrator\ViewModels\Home\" />
-    <Folder Include="Areas\Administrator\ViewModels\Orders\" />
-    <Folder Include="Areas\Administrator\Views\Orders\" />
     <Folder Include="TagHelpers\" />
     <Folder Include="wwwroot\images\users\" />
   </ItemGroup>
