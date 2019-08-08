@@ -22,10 +22,9 @@ namespace Marketplace.Services
 
         public async Task<bool> AddProduct(Product product)
         {
-            var result = this.context
-                .Products
-                .Add(product);
+            if (product == null) return false;
 
+            this.context.Products.Add(product);
             var isSaved = await this.context.SaveChangesAsync();
 
             return isSaved > 0;

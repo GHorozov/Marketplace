@@ -26,7 +26,7 @@ namespace Marketplace.Services
             this.userManager = userManager;
             this.userManager = userManager;
         }
-       
+
         public IQueryable<TModel> GetAllUsers<TModel>()
         {
             var users = this.context
@@ -39,7 +39,7 @@ namespace Marketplace.Services
         public async Task DeleteById(string id)
         {
             var user = await this.userManager.FindByIdAsync(id);
-            if(user != null)
+            if (user != null)
             {
                 await this.userManager.DeleteAsync(user);
             }
@@ -54,6 +54,7 @@ namespace Marketplace.Services
                 .Include(x => x.Products)
                 .Include(x => x.Orders)
                 .Include(x => x.WishProducts)
+                .Include(x => x.Messages)
                 .SingleOrDefaultAsync();
 
             return user;
@@ -81,7 +82,7 @@ namespace Marketplace.Services
 
         public int GetAllWishProductsCount(MarketplaceUser user)
         {
-            if(user == null)
+            if (user == null)
             {
                 return 0;
             }
@@ -90,5 +91,7 @@ namespace Marketplace.Services
 
             return count;
         }
+
+       
     }
 }

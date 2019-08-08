@@ -1,4 +1,6 @@
-﻿using Marketplace.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Marketplace.Data;
 using Marketplace.Domain;
 using Marketplace.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +15,12 @@ namespace Marketplace.Services
     public class OrderService : IOrderService
     {
         private readonly MarketplaceDbContext context;
+        private readonly IMapper mapper;
 
-        public OrderService(MarketplaceDbContext context)
+        public OrderService(MarketplaceDbContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         public async Task<bool> Create(MarketplaceUser user, string phone, string shippingAddress)
@@ -68,6 +72,16 @@ namespace Marketplace.Services
             await this.context.SaveChangesAsync();
 
             return true;
+        }
+
+        public IQueryable<TModel> GetAllOrders<TModel>()
+        {
+            var result = this.context
+                .Orders
+                .Include(x => x.MarketplaceUser)
+                .ProjectTo<TModel>(mapper.ConfigurationProvider);
+
+            return result;
         }
     }
 }
