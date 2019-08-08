@@ -16,6 +16,8 @@ namespace Marketplace.Domain
 
         public string MessageContent { get; set; }
 
+        public bool MarkAsRead { get; set; }
+
         public DateTime IssuedOn { get; set; } = DateTime.UtcNow;
 
         public string MarketplaceUserId { get; set; }
