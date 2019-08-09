@@ -151,7 +151,7 @@ namespace Marketplace.Services
             return result;
         }
 
-        public IQueryable<TModel> GetProductByInput<TModel>(string input, string categoryName)
+        public IQueryable<TModel> GetProductByInput<TModel>(string input)
         {
             var result = this.context
                .Products
@@ -161,7 +161,7 @@ namespace Marketplace.Services
             return result;
         }
 
-        public IQueryable<TModel> GetProductByCategoryName<TModel>(string input, string categoryName)
+        public IQueryable<TModel> GetProductByCategoryName<TModel>(string categoryName)
         {
             var result = this.context
                .Products

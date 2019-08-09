@@ -26,8 +26,8 @@ namespace Marketplace.Services.Interfaces
 
         IQueryable<TModel> GetProductByInputAndCategoryName<TModel>(string input, string categoryName);
 
-        IQueryable<TModel> GetProductByInput<TModel>(string input, string categoryName);
+        IQueryable<TModel> GetProductByInput<TModel>(string input);
 
-        IQueryable<TModel> GetProductByCategoryName<TModel>(string input, string categoryName);
+        IQueryable<TModel> GetProductByCategoryName<TModel>(string categoryName);
     }
 }
