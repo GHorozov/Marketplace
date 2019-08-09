@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Marketplace.App.Controllers
 {
-    public class CategoriesController :Controller
+    public class CategoriesController : Controller
     {
         private readonly IProductService productService;
 

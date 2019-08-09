@@ -56,13 +56,13 @@ namespace Marketplace.App.Controllers
             }
             else if (inputModel.Input != string.Empty)
             {
-                var resultModel = this.productService.GetProductByInput<HomeSearchViewModel>(inputModel.Input, inputModel.CategoryName).ToList();
+                var resultModel = this.productService.GetProductByInput<HomeSearchViewModel>(inputModel.Input).ToList();
 
                 return this.View(resultModel);
             }
             else if (inputModel.CategoryName != GlobalConstants.SearchCategoryDefaultValue)
             {
-                var resultModel = this.productService.GetProductByCategoryName<HomeSearchViewModel>(inputModel.Input, inputModel.CategoryName).ToList();
+                var resultModel = this.productService.GetProductByCategoryName<HomeSearchViewModel>(inputModel.CategoryName).ToList();
 
                 return this.View(resultModel);
             }
