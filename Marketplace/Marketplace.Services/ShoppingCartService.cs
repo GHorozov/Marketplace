@@ -29,23 +29,17 @@ namespace Marketplace.Services
             this.userService = userService;
         }
 
-        public async Task<bool> AddProductToShoppingCartAsync(string productId, string userId, int quantity)
+        public async Task<bool> AddProductToShoppingCartAsync(string productId, string username, int quantity)
         {
             var product = this.context
                 .Products
                 .SingleOrDefault(x => x.Id == productId);
 
-            var user = await this.userManager.FindByIdAsync(userId);
+            var user = await this.userService.GetUserByUsername(username);
 
-            if (product == null || product.Quantity <= 0 || product.Quantity < quantity || user == null) return false;
+            if (product == null || quantity <= 0 || user == null) return false;
 
-            var shoppingCartProduct = this.context
-               .ShoppingCartProduct
-               .FirstOrDefault(x => x.ProductId == product.Id && x.ShoppingCartId == user.ShoppingCartId);
-
-            if (shoppingCartProduct != null) return false;
-
-            shoppingCartProduct = new ShoppingCartProduct()
+            var shoppingCartProduct = new ShoppingCartProduct()
             {
                 Product = product,
                 ShoppingCartId = user.ShoppingCartId,

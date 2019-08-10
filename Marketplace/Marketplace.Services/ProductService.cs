@@ -86,7 +86,7 @@ namespace Marketplace.Services
                 return false;
             }
 
-            product.Category = category;
+            product.CategoryId = category.Id;
 
             this.context.Update(product);
             var result = await this.context.SaveChangesAsync();
@@ -122,6 +122,7 @@ namespace Marketplace.Services
                  .Products
                  .Include(x => x.Category)
                  .Include(x => x.Pictures)
+                 .Include(x => x.MarketplaceUser)
                  .Where(x => x.MarketplaceUserId == userId);
 
             var result = products.ProjectTo<TModel>(mapper.ConfigurationProvider);

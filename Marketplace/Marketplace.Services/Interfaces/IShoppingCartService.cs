@@ -7,7 +7,7 @@ namespace Marketplace.Services.Interfaces
 {
     public interface IShoppingCartService
     {
-        Task<bool> AddProductToShoppingCartAsync(string productId, string userId, int quantity);
+        Task<bool> AddProductToShoppingCartAsync(string productId, string username, int quantity);
 
         IQueryable<TModel> GetAllShoppingCartProducts<TModel>(MarketplaceUser user);
 

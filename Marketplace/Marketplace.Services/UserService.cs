@@ -102,5 +102,12 @@ namespace Marketplace.Services
 
             return count;
         }
+
+        public async Task<MarketplaceUser> GetUserByUsername(string username)
+        {
+            return  await this.context
+                .Users
+                .SingleOrDefaultAsync(x => x.UserName == username);
+        }
     }
 }
