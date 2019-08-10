@@ -88,7 +88,7 @@ namespace Marketplace.App.Controllers
                 return this.View(inputModel);
             }
 
-            var category = this.categoryService.GetCategoryByName(inputModel.CategoryName);
+            var category = await this.categoryService.GetCategoryByName(inputModel.CategoryName);
             await this.productService.AddCategory(product.Id, category);
 
             var picturePath = await this.pictureService
@@ -149,7 +149,11 @@ namespace Marketplace.App.Controllers
             }
 
             var product = this.mapper.Map<Product>(inputModel);
-            var category = this.categoryService.GetCategoryByName(inputModel.CategoryName);
+            var category = await this.categoryService.GetCategoryByName(inputModel.CategoryName);
+            if (category == null)
+            {
+                return this.Redirect("/");
+            }
             product.Category = category;
 
             var editedProduct = await this.productService.EditProduct(product);
