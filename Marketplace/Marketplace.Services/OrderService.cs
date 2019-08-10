@@ -86,9 +86,8 @@ namespace Marketplace.Services
         public IQueryable<TModel> GetMyOrders<TModel>(string userId)
         {
             var result = this.context
-                .Users
-                .Where(x => x.Id == userId)
-                .Select(x => x.Orders)
+                .Orders
+                .Where(x => x.MarketplaceUserId == userId)
                 .ProjectTo<TModel>(mapper.ConfigurationProvider);
 
             return result;
