@@ -126,69 +126,69 @@ namespace Marketplace.Services.Tests
         }
 
         //GetAllOrders
-        [Fact]
-        public void GetAllOrdersShouldReturnOneModel()
-        {
-            //Arrange
-            var options = new DbContextOptionsBuilder<MarketplaceDbContext>()
-                        .UseInMemoryDatabase("GetAllOrdersShouldReturnOneModel")
-                        .Options;
-            var dbContext = new MarketplaceDbContext(options);
-            var profile = new MarketplaceProfile();
-            var configuration = new MapperConfiguration(x => x.AddProfile(profile));
-            var mapper = new Mapper(configuration);
-            var orderService = new OrderService(dbContext, mapper);
+        //[Fact]
+        //public void GetAllOrdersShouldReturnOneModel()
+        //{
+        //    //Arrange
+        //    var options = new DbContextOptionsBuilder<MarketplaceDbContext>()
+        //                .UseInMemoryDatabase("GetAllOrdersShouldReturnOneModel")
+        //                .Options;
+        //    var dbContext = new MarketplaceDbContext(options);
+        //    var profile = new MarketplaceProfile();
+        //    var configuration = new MapperConfiguration(x => x.AddProfile(profile));
+        //    var mapper = new Mapper(configuration);
+        //    var orderService = new OrderService(dbContext, mapper);
 
-            var user = new MarketplaceUser()
-            {
-                Id = "8ca6c061-52de-4f0a-8885-a7501b6dae79",
-                FirstName = "Ivan",
-                LastName = "Ivanov",
-                Email = "ivanivanov@abv.bg"
-            };
-            dbContext.Users.Add(user);
-            dbContext.SaveChanges();
+        //    var user = new MarketplaceUser()
+        //    {
+        //        Id = "8ca6c061-52de-4f0a-8885-a7501b6dae79",
+        //        FirstName = "Ivan",
+        //        LastName = "Ivanov",
+        //        Email = "ivanivanov@abv.bg"
+        //    };
+        //    dbContext.Users.Add(user);
+        //    dbContext.SaveChanges();
 
-            var product = new Product()
-            {
-                Id = "532b377e-83f1-43db-a697-1e623107ae60",
-                Name = "TestProduct",
-                Price = 5.45m,
-                Quantity = 1
-            };
-            dbContext.Products.Add(product);
-            dbContext.SaveChanges();
+        //    var product = new Product()
+        //    {
+        //        Id = "532b377e-83f1-43db-a697-1e623107ae60",
+        //        Name = "TestProduct",
+        //        Price = 5.45m,
+        //        Quantity = 1
+        //    };
+        //    dbContext.Products.Add(product);
+        //    dbContext.SaveChanges();
 
-            var order = new Order()
-            {
-                Id = "492a1470-1a88-40fd-bc09-358077449545",
-                IssuedOn = DateTime.UtcNow,
-                MarketplaceUserId = user.Id,
-                Quantity = 1,
-                Phone = "0884488905",
-                ShippingAddress = "ul.Stara Planina 23",
-            };
+        //    var order = new Order()
+        //    {
+        //        Id = "492a1470-1a88-40fd-bc09-358077449545",
+        //        IssuedOn = DateTime.UtcNow,
+        //        MarketplaceUserId = user.Id,
+        //        Quantity = 1,
+        //        Phone = "0884488905",
+        //        ShippingAddress = "ul.Stara Planina 23",
+        //    };
 
-            var productOrder = new ProductOrder()
-            {
-                 ProductId = product.Id,
-                  OrderId = order.Id
-            };
+        //    var productOrder = new ProductOrder()
+        //    {
+        //         ProductId = product.Id,
+        //          OrderId = order.Id
+        //    };
 
-            dbContext.ProductOrder.Add(productOrder);
-            dbContext.SaveChanges();
+        //    dbContext.ProductOrder.Add(productOrder);
+        //    dbContext.SaveChanges();
 
-            order.Products.Add(productOrder);
-            dbContext.SaveChanges();
+        //    order.Products.Add(productOrder);
+        //    dbContext.SaveChanges();
 
-            //To do: To configure in profile model and run test
+        //    //To do: To configure in profile model and run test
 
-            //Act 
-            var result = orderService.GetAllOrders<OrderViewModel>();
-            var actual = result.Count();
-            var expected = 1;
-            //Assert
-            Assert.Equal(expected, actual);
-        }
+        //    //Act 
+        //    var result = orderService.GetAllOrders<OrderViewModel>();
+        //    var actual = result.Count();
+        //    var expected = 1;
+        //    //Assert
+        //    Assert.Equal(expected, actual);
+        //}
     }
 }
