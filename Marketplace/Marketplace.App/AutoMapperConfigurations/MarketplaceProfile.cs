@@ -11,6 +11,7 @@ using Marketplace.App.ViewModels.WishList;
 using Marketplace.App.ViewModels.Categories;
 using Marketplace.App.Areas.Administrator.ViewModels.Messages;
 using Marketplace.App.Areas.Administrator.ViewModels.Orders;
+using Marketplace.App.ViewModels.Orders;
 
 namespace Marketplace.App.AutoMapperConfigurations
 {
@@ -81,6 +82,11 @@ namespace Marketplace.App.AutoMapperConfigurations
             //Orders
             this.CreateMap<Order, AdminOrderViewModel>()
                 .ForMember(aovm => aovm.Email, x => x.MapFrom(u => u.MarketplaceUser.Email));
+
+            this.CreateMap<Order, MyOrderViewModel>()
+                .ForMember(movm => movm.IssuedDate, x => x.MapFrom(o => o.IssuedOn))
+                .ForMember(movm => movm.OrderedPrductsCount, x => x.MapFrom(o => o.Products.Count()))
+                .ForMember(movm => movm.Total, x => x.MapFrom(o => o.Products.Sum(p => p.Product.Price)));
         }
     }
 }
