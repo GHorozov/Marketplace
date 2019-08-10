@@ -4,29 +4,26 @@
 <div class="top_bar">
     <div class="container">
         <div class="row">
-            <div class="col-md-5 d-inline-flex">
+            <div class="col d-flex flex-row">
                 <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="~/images/phone.png" alt="phone-icon"></div>0883399805</div>
                 <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="~/images/mail.png" alt="mail-icon"></div><a href="/" disabled="disabled">georgihorozov64@gmail.com</a></div>
             </div>
 
-            <div class="col-md-7 d-inline-flex">
-                @*<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="~/images/phone.png" alt="phone-icon"></div>0883399805</div>
-                <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="~/images/mail.png" alt="mail-icon"></div><a href="/" disabled="disabled">georgihorozov64@gmail.com</a></div>*@
-
+            <div class="col d-flex flex-row ml-auto">
                 <div class="top_bar_content ml-auto">
                     @if (SignInManager.IsSignedIn(this.User))
                     {
-                        <div class="top_bar_user">
+                        <div class="top_bar_user ml-auto">
 
                             @if (this.User.IsInRole(GlobalConstants.AdministratorRole))
                             {
-                                <div class="top_bar_user">
+                                <div class="top_bar_user ml-auto">
                                     <form class="form-inline" asp-area="Administrator" asp-controller="Home" asp-action="Index" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                         <button type="submit" class="nav-link btn btn-link text-white bg-success">Control Panel</button>
                                     </form>
                                 </div>
 
-                                <div class="top_bar_user">
+                                <div class="top_bar_user ml-auto">
                                     <a asp-area="" asp-controller="Profile" asp-action="Index" title="Frofile">
                                         @User.Identity.Name
                                         <div>
@@ -35,7 +32,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="top_bar_user">
+                                <div class="top_bar_user ml-auto">
                                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                         <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                                     </form>
@@ -43,7 +40,7 @@
                             }
                             else
                             {
-                                <div class="top_bar_user">
+                                <div class="top_bar_user ml-auto">
                                     <a asp-area="" asp-controller="Profile" asp-action="Index" title="Frofile">
                                         Hello, @User.Identity.Name!
                                         <div>
@@ -53,7 +50,7 @@
                                     </a>
                                 </div>
 
-                                <div class="top_bar_user">
+                                <div class="top_bar_user ml-auto">
                                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                         <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                                     </form>
@@ -64,9 +61,8 @@
                     else
                     {
                         <div class="top_bar_user">
-                            <div class="user_icon"><img src="images/user.svg" alt=""></div>
-                            <div><a asp-area="Identity" asp-page="/Account/Register">Register</a></div>
-                            <div><a asp-area="Identity" asp-page="/Account/Login"><div><i class="fas fa-sign-in-alt"></i></div> Sign in</a></div>
+                            <div class="mr-3"><a asp-area="Identity" asp-page="/Account/Register"><div class="user_icon"><img src="~/images/user.svg" alt=""></div>Register</a></div>
+                            <div class="ml-auto"><a asp-area="Identity" asp-page="/Account/Login"><div><i class="fas fa-sign-in-alt"></i></div> Sign in</a></div>
                         </div>
                     }
                 </div>

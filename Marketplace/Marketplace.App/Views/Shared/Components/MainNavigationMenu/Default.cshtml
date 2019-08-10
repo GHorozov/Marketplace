@@ -38,16 +38,15 @@
                                     <li class="hassubs">
                                         <a href="#">Products<i class="fas fa-chevron-down"></i></a>
                                         <ul>
+                                            <li><a asp-area="" asp-controller="Products" asp-action="All">AllProducts<i class="fas fa-chevron-down"></i></a></li>
                                             <li><a asp-area="" asp-controller="Products" asp-action="Create">Create Product<i class="fas fa-chevron-down"></i></a></li>
                                             <li><a asp-area="" asp-controller="Products" asp-action="My">MyProducts<i class="fas fa-chevron-down"></i></a></li>
-                                            <li><a asp-area="" asp-controller="Products" asp-action="All">AllProducts<i class="fas fa-chevron-down"></i></a></li>
                                         </ul>
                                     </li>
                                     <li class="hassubs">
                                         <a href="#">Orders<i class="fas fa-chevron-down"></i></a>
                                         <ul>
-                                            <li><a asp-area="" asp-controller="Orders" asp-action="My">MyOrders<i class="fas fa-chevron-down"></i></a></li> @*to do: add link*@
-                                            <li><a asp-area="" asp-controller="Orders" asp-action="ActiveOrders">ActiveOrders<i class="fas fa-chevron-down"></i></a></li> @*to do: add link*@
+                                            <li><a asp-area="" asp-controller="Orders" asp-action="My">MyOrders<i class="fas fa-chevron-down"></i></a></li>
                                         </ul>
                                     </li>
                                 }
