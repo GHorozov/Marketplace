@@ -37,14 +37,18 @@ namespace Marketplace.App.Areas.Administrator.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Create(CreateCategoryInputModel inputModel)
+        public async Task<IActionResult> Create(CreateCategoryInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
                 return this.View(inputModel);
             }
 
-            this.categoryService.Create(inputModel.Name);
+            var result = await this.categoryService.Create(inputModel.Name);
+            if (!result)
+            {
+                return this.Redirect("/");
+            }
 
             return RedirectToAction(nameof(All));
         }
@@ -53,7 +57,7 @@ namespace Marketplace.App.Areas.Administrator.Controllers
         public IActionResult Edit(string id)
         {
             var category = this.categoryService.GetCategoryById(id);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }
