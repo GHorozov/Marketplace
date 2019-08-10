@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Marketplace.App.Areas.Administrator.ViewModels.Users;
+using Marketplace.App.Infrastructure;
+using Marketplace.Domain;
 using Marketplace.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.App.Areas.Administrator.Controllers
@@ -13,17 +16,20 @@ namespace Marketplace.App.Areas.Administrator.Controllers
     {
         private readonly IMapper mapper;
         private readonly IUserService userService;
+        private readonly UserManager<MarketplaceUser> userManager;
 
-        public UsersController(IMapper mapper, IUserService usersService)
+        public UsersController(IMapper mapper, IUserService usersService, UserManager<MarketplaceUser> userManager)
         {
             this.mapper = mapper;
             this.userService = usersService;
+            this.userManager = userManager;
         }
 
         [HttpGet]
         public IActionResult All()
         {
             var users = this.userService.GetAllUsers<UserViewModel>().ToList();
+
             return View(users);
         }
 
@@ -33,7 +39,7 @@ namespace Marketplace.App.Areas.Administrator.Controllers
             var user = await this.userService.GetUserById(id);
             if(user == null)
             {
-                return NotFound();
+                return this.RedirectToAction(nameof(All));
             }
 
             var userModel = this.mapper.Map<DeleteUserViewModel>(user);
