@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MyOrderViewModel>
+@{
+    ViewData["Title"] = "MyOrders";
+}
+
+@await Component.InvokeAsync(typeof(MainHeaderViewComponent))
+@await Component.InvokeAsync(typeof(MainNavigationMenuViewComponent))
+
+<div class="cart_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="cart_container">
+                    <div class="cart_title">My Orders</div>
+                    <div class="cart_items">
+                        <ul class="cart_list">
+                            @foreach (var item in Model)
+                            {
+                                <li class="cart_item clearfix">
+                                    <div class="cart_item_image"><img src="~/images/banner_2_background.jpg" alt="WishList Picture"></div>
+                                    <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                        <div class="cart_item_name cart_info_col">
+                                            <div class="cart_item_title">OrderId</div>
+                                            <div class="cart_item_text">@item.Id</div>
+                                        </div>
+                                        <div class="cart_item_price cart_info_col">
+                                            <div class="cart_item_title">Quantity</div>
+                                            <div class="cart_item_text">@item.Quantity</div>
+                                        </div>
+                                        <div class="cart_item_price cart_info_col">
+                                            <div class="cart_item_title">Creation date</div>
+                                            <div class="cart_item_text">@item.IssuedOn.ToShortDateString()</div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                    <div class="d-inline-flex float-right mt-3">
+                        <div class="mr-3"><a class="btn btn-block btn-lg bg-danger text-white font-weight-bold" asp-controller="Home" asp-action="Index">Back to home</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
