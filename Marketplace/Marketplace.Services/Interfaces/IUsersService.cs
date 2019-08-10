@@ -10,7 +10,7 @@ namespace Marketplace.Services.Interfaces
     {
         IQueryable<TModel> GetAllUsers<TModel>();
 
-        Task DeleteById(string id);
+        Task<bool> DeleteById(string id);
 
         Task<MarketplaceUser> GetUserById(string id);
 

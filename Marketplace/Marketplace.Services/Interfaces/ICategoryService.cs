@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Marketplace.Services.Interfaces
 {
@@ -10,12 +11,12 @@ namespace Marketplace.Services.Interfaces
     {
         IQueryable<TModel> GetAllCategories<TModel>();
 
-        Category GetCategoryById(string id);
+        Task<Category> GetCategoryById(string id);
 
-        Category GetCategoryByName(string name);
+        Task<Category> GetCategoryByName(string name);
 
-        void Create(string name);
+        Task<bool> Create(string name);
 
-        void Edit(string id, string name);
+        Task<bool> Edit(string id, string name);
     }
 }

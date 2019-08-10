@@ -17,19 +17,19 @@ namespace Marketplace.Services
         private const string AdministratorRole = "Administrator";
         private readonly MarketplaceDbContext context;
         private readonly IMapper mapper;
-        private readonly IUserService userService;
         private readonly UserManager<MarketplaceUser> userManager;
 
-        public MessageService(MarketplaceDbContext context,IMapper mapper, IUserService userService, UserManager<MarketplaceUser> userManager)
+        public MessageService(MarketplaceDbContext context,IMapper mapper, UserManager<MarketplaceUser> userManager)
         {
             this.context = context;
             this.mapper = mapper;
-            this.userService = userService;
             this.userManager = userManager;
         }
 
         public async Task<bool> Create(string userId, string name, string email, string phone, string messageContent)
         {
+            if (string.IsNullOrWhiteSpace(userId)) return false;
+
             var message = new Message()
             {
                 Name = name,
@@ -94,7 +94,7 @@ namespace Marketplace.Services
 
             this.context.Messages.Remove(targetMessage);
 
-            var user = await this.userService.GetUserById(userId);
+            var user = await this.context.Users.SingleAsync(x => x.Id == userId);
             user.Messages.Remove(targetMessage);
             var result = await this.context.SaveChangesAsync();
 

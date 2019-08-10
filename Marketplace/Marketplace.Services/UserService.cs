@@ -24,7 +24,6 @@ namespace Marketplace.Services
             this.context = context;
             this.mapper = mapper;
             this.userManager = userManager;
-            this.userManager = userManager;
         }
 
         public IQueryable<TModel> GetAllUsers<TModel>()
@@ -36,13 +35,17 @@ namespace Marketplace.Services
             return users;
         }
 
-        public async Task DeleteById(string id)
+        public async Task<bool> DeleteById(string id)
         {
             var user = await this.userManager.FindByIdAsync(id);
             if (user != null)
             {
                 await this.userManager.DeleteAsync(user);
+
+                return true;
             }
+
+            return false;
         }
 
         public async Task<MarketplaceUser> GetUserById(string id)
@@ -62,8 +65,12 @@ namespace Marketplace.Services
 
         public async Task<IEnumerable<string>> GetUserRoles(string id)
         {
-            var user = await this.userManager
-                .FindByIdAsync(id);
+            var user = await this.context
+                .Users
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+
+            if(user == null) return new List<string>();
 
             var userInRoles = await this.userManager
                 .GetRolesAsync(user);
@@ -73,7 +80,11 @@ namespace Marketplace.Services
 
         public async Task<IdentityResult> ChangePassword(string id, string password)
         {
-            var user = await this.userManager.FindByIdAsync(id);
+            var user = await this.context
+                .Users
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+
             var token = await this.userManager.GeneratePasswordResetTokenAsync(user);
             var result = await this.userManager.ResetPasswordAsync(user, token, password);
 
@@ -91,7 +102,5 @@ namespace Marketplace.Services
 
             return count;
         }
-
-       
     }
 }

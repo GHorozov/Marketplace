@@ -5,6 +5,7 @@ using Marketplace.Domain;
 using Marketplace.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Marketplace.Services
 {
@@ -28,44 +29,49 @@ namespace Marketplace.Services
             return result;
         }
 
-        public void Create(string name)
+        public async Task<bool> Create(string name)
         {
+            if (string.IsNullOrWhiteSpace(name)) return false;
+
             var category = new Category() { Name = name };
 
             this.context.Categories.Add(category);
-            this.context.SaveChanges();
+            var result = await this.context.SaveChangesAsync();
+
+            return result > 0;
         }
 
-        public Category GetCategoryById(string id)
+        public async Task<Category> GetCategoryById(string id)
         {
-            var category = this.context
+            var category = await this.context
                 .Categories
-                .SingleOrDefault(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
 
             return category;
         }
 
-        public Category GetCategoryByName(string name)
+        public async Task<Category> GetCategoryByName(string name)
         {
-            var category = this.context
+            var category = await this.context
                 .Categories
-                .SingleOrDefault(x => x.Name == name);
+                .SingleOrDefaultAsync(x => x.Name == name);
 
             return category;
         }
 
-        public void Edit(string id, string name)
+        public async Task<bool> Edit(string id, string name)
         {
-            var category = this.GetCategoryById(id);
-            if (category == null)
-            {
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(name)) return false;
+
+            var category = await this.GetCategoryById(id);
+            if (category == null) return false;
 
             category.Name = name;
 
             this.context.Categories.Update(category);
-            this.context.SaveChanges();
+            var result = await this.context.SaveChangesAsync();
+
+            return result > 0;
         }
     }
 }
