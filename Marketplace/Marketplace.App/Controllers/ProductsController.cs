@@ -41,8 +41,7 @@ namespace Marketplace.App.Controllers
         [Authorize]
         public async Task<IActionResult> My()
         {
-            var user = await this.userManager.FindByEmailAsync(User.Identity.Name);
-
+            var user = await this.userManager.GetUserAsync(HttpContext.User);
             var resultModel = this.productService.GetMyProducts<MyProductViewModel>(user.Id).ToList();
 
             return this.View(resultModel);
@@ -67,7 +66,7 @@ namespace Marketplace.App.Controllers
                 return this.View(inputModel);
             }
 
-            var user = await this.userManager.FindByEmailAsync(User.Identity.Name);
+            var user = await this.userManager.GetUserAsync(HttpContext.User);
 
             var product = new Product()
             {
@@ -77,7 +76,7 @@ namespace Marketplace.App.Controllers
                 Description = inputModel.Description,
                 PublishDate = DateTime.UtcNow,
                 Color = inputModel.Color,
-                MarketplaceUser = user,
+                MarketplaceUserId = user.Id,
             };
 
             var isProductAdded = await this.productService.AddProduct(product);
@@ -106,10 +105,10 @@ namespace Marketplace.App.Controllers
             {
                 return NotFound();
             }
-            
+
             var resultModel = this.mapper.Map<DetailsProductViewModel>(product);
             var user = await this.userManager.GetUserAsync(HttpContext.User);
-            if(user == null)
+            if (user == null)
             {
                 return this.View(resultModel);
             }
@@ -119,12 +118,12 @@ namespace Marketplace.App.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var product = productService.GetProductById(id);
+            var product = await productService.GetProductById(id);
             if (product == null)
             {
-                return NotFound();
+                return Redirect("/");
             }
 
             var allCategories = this.categoryService.GetAllCategories<ProductCategoryViewModel>().ToList();
@@ -149,13 +148,10 @@ namespace Marketplace.App.Controllers
             }
 
             var product = this.mapper.Map<Product>(inputModel);
+            var user = await this.userManager.GetUserAsync(HttpContext.User);
+            product.MarketplaceUserId = user.Id;
             var category = await this.categoryService.GetCategoryByName(inputModel.CategoryName);
-            if (category == null)
-            {
-                return this.Redirect("/");
-            }
-            product.Category = category;
-
+            product.CategoryId = category.Id;
             var editedProduct = await this.productService.EditProduct(product);
 
             var picturePath = await this.pictureService

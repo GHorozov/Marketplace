@@ -15,14 +15,12 @@ namespace Marketplace.App.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        private readonly IMapper mapper;
         private readonly UserManager<MarketplaceUser> userManager;
         private readonly IShoppingCartService shoppingCartService;
         private readonly IProductService productService;
 
-        public ShoppingCartController(IMapper mapper, UserManager<MarketplaceUser> userManager, IShoppingCartService shoppingCartService, IProductService productService)
+        public ShoppingCartController(UserManager<MarketplaceUser> userManager, IShoppingCartService shoppingCartService, IProductService productService)
         {
-            this.mapper = mapper;
             this.userManager = userManager;
             this.shoppingCartService = shoppingCartService;
             this.productService = productService;
@@ -46,7 +44,6 @@ namespace Marketplace.App.Controllers
             }
 
             var cartProductsFromSession = this.GetSessionShoppingCart();
-
             var resultModelFromSeesion = new ShoppingCartProductsViewModel()
             {
                 Products = cartProductsFromSession.ToList()
@@ -61,13 +58,10 @@ namespace Marketplace.App.Controllers
             if (this.User.Identity.IsAuthenticated)
             {
                 var user = await this.userManager.GetUserAsync(HttpContext.User);
-                var result = await this.shoppingCartService.AddProductToShoppingCartAsync(id, user.Id, quantity);
+                var result = await this.shoppingCartService.AddProductToShoppingCartAsync(id, user.UserName, quantity);
                 if (!result)
                 {
-                    //to do
-                    this.ViewData["Quantity"] = "Quantity cannot be lower than 0 or bigger than available.";
-
-                    this.Redirect($"/Product/Details/{id}");
+                    this.Redirect("/");
                 }
             }
             else
@@ -75,8 +69,16 @@ namespace Marketplace.App.Controllers
                 var cartProductsFromSession = this.GetSessionShoppingCart();
                 var cart = cartProductsFromSession.ToList();
 
-                var product = this.productService.GetProductById(id);
-                var productToAdd = this.mapper.Map<ShoppingCartViewModel>(product);
+                var product = await this.productService.GetProductById(id);
+                var productToAdd = new ShoppingCartViewModel()
+                {
+                    Id = product.Id,
+                    Color = product.Color,
+                    Name = product.Name,
+                    PictureUrl = product.Pictures.First().PictureUrl,
+                    Price = product.Price,
+                    Quantity = quantity
+                };
                 cart.Add(productToAdd);
                 this.HttpContext.Session.SetObjectToJson(GlobalConstants.ShoppingCartKey, cart);
             }
@@ -92,7 +94,6 @@ namespace Marketplace.App.Controllers
                 var result = await this.shoppingCartService.Delete(id, user.Id);
                 if (!result)
                 {
-                    //to do
                     return this.Redirect("/");
                 }
             }
@@ -100,9 +101,9 @@ namespace Marketplace.App.Controllers
             {
                 var cartProductsFromSession = GetSessionShoppingCart();
                 var cart = cartProductsFromSession.ToList();
-                var product = this.productService.GetProductById(id);
-                var productToDelete = this.mapper.Map<ShoppingCartViewModel>(product);
-                cart.Remove(productToDelete);
+                var product =await this.productService.GetProductById(id);
+                var productToRemove = cart.Single(x => x.Id == product.Id);
+                cart.Remove(productToRemove);
                 this.HttpContext.Session.SetObjectToJson(GlobalConstants.ShoppingCartKey, cart);
             }
 
@@ -117,7 +118,6 @@ namespace Marketplace.App.Controllers
                 var result = await this.shoppingCartService.ClearCart(user);
                 if (!result)
                 {
-                    //to do;
                     return this.Redirect("/");
                 }
             }
