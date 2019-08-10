@@ -48,6 +48,12 @@ namespace Marketplace.App
                 .AddDefaultTokenProviders();
 
 
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.IdleTimeout = new TimeSpan(0, 1, 0, 0);
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -58,26 +64,16 @@ namespace Marketplace.App
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.KnownProxies.Add(IPAddress.Any);
-            });
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSession(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.IdleTimeout = new TimeSpan(0, 1, 0, 0);
-            });
-
             services.AddAutoMapper(typeof(MarketplaceProfile).Assembly);
-
+            services.AddTransient<MarketplaceDbContext>();
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
@@ -87,6 +83,7 @@ namespace Marketplace.App
             services.AddTransient<IPictureService, PictureService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IMessageService, MessageService>();
+            services.AddSession();
 
 
             services.AddAuthentication()
@@ -107,11 +104,19 @@ namespace Marketplace.App
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetRequiredService<MarketplaceDbContext>())
+                {
+                    context.Database.Migrate();
+
+                    app.UseSeedDatabaseMiddleware();
+                }
+            }
 
             app.UseDeveloperExceptionPage();
             app.UseDatabaseErrorPage();
             app.UseHsts();
-            app.UseSeedDatabaseMiddleware();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
