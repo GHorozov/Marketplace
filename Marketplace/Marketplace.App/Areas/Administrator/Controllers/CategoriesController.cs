@@ -54,12 +54,12 @@ namespace Marketplace.App.Areas.Administrator.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var category = this.categoryService.GetCategoryById(id);
+            var category = await this.categoryService.GetCategoryById(id);
             if (category == null)
             {
-                return NotFound();
+                return this.RedirectToAction(nameof(All));
             }
             var resultModel = this.mapper.Map<EditCategoryInputModel>(category);
 
@@ -68,14 +68,14 @@ namespace Marketplace.App.Areas.Administrator.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Edit(string id, EditCategoryInputModel inputModel)
+        public async Task<IActionResult> Edit(string id, EditCategoryInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
                 return this.View(inputModel);
             }
 
-            this.categoryService.Edit(id, inputModel.Name);
+            await this.categoryService.Edit(id, inputModel.Name);
 
             return RedirectToAction(nameof(All));
         }
