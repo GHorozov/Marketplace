@@ -83,10 +83,7 @@ namespace Marketplace.App.AutoMapperConfigurations
             this.CreateMap<Order, AdminOrderViewModel>()
                 .ForMember(aovm => aovm.Email, x => x.MapFrom(u => u.MarketplaceUser.Email));
 
-            this.CreateMap<Order, MyOrderViewModel>()
-                .ForMember(movm => movm.IssuedDate, x => x.MapFrom(o => o.IssuedOn))
-                .ForMember(movm => movm.OrderedPrductsCount, x => x.MapFrom(o => o.Products.Count()))
-                .ForMember(movm => movm.Total, x => x.MapFrom(o => o.Products.Sum(p => p.Product.Price)));
+            this.CreateMap<Order, MyOrderViewModel>();
         }
     }
 }
