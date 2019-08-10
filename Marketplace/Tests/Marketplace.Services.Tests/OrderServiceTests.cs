@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using Marketplace.App.AutoMapperConfigurations;
-using Marketplace.App.ViewModels.Orders;
 using Marketplace.Data;
 using Marketplace.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
