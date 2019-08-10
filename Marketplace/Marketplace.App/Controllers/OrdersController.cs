@@ -65,5 +65,15 @@ namespace Marketplace.App.Controllers
         {
             return this.View();
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> MyOrders()
+        {
+            var user = await this.userManager.GetUserAsync(HttpContext.User);
+            var resultModel = this.orderService.GetMyOrders<MyOrderViewModel>(user.Id).ToList(); 
+
+            return this.View(resultModel);
+        }
     }
 }

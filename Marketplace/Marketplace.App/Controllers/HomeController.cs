@@ -26,7 +26,6 @@ namespace Marketplace.App.Controllers
             this.productService = productService;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public IActionResult Index()
         {

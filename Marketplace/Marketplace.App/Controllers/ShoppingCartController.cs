@@ -86,6 +86,7 @@ namespace Marketplace.App.Controllers
             return this.Redirect("/");
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
             if (this.User.Identity.IsAuthenticated)
@@ -110,6 +111,7 @@ namespace Marketplace.App.Controllers
             return this.RedirectToAction(nameof(Cart));
         }
 
+        [HttpGet]
         public async Task<IActionResult> ClearCart()
         {
             if (this.User.Identity.IsAuthenticated)
