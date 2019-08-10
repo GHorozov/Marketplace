@@ -64,7 +64,6 @@ namespace Marketplace.Services
             var wishProduct = new WishProduct()
             {
                 MarketplaceUserId = userFromDb.Id,
-                MarketplaceUser = userFromDb,
                 ProductId = id
             };
 
@@ -86,7 +85,6 @@ namespace Marketplace.Services
                 .SingleOrDefaultAsync();
 
             userFromDb.WishProducts.Remove(wishProduct);
-            this.context.Users.Update(userFromDb);
             this.context.WishProducts.Remove(wishProduct);
             var result = await this.context.SaveChangesAsync();
 

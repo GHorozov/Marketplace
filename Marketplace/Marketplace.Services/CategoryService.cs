@@ -68,7 +68,7 @@ namespace Marketplace.Services
 
             category.Name = name;
 
-            this.context.Categories.Update(category);
+            this.context.Update(category);
             var result = await this.context.SaveChangesAsync();
 
             return result > 0;

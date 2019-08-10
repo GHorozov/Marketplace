@@ -84,6 +84,7 @@ namespace Marketplace.Services
                 .Users
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
+                
 
             var token = await this.userManager.GeneratePasswordResetTokenAsync(user);
             var result = await this.userManager.ResetPasswordAsync(user, token, password);

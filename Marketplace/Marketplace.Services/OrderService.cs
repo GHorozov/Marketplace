@@ -39,7 +39,6 @@ namespace Marketplace.Services
                 {
                     IssuedOn = DateTime.UtcNow,
                     MarketplaceUserId = user.Id,
-                    MarketplaceUser = user,
                     Quantity = product.Quantity,
                     Phone = phone,
                     ShippingAddress = shippingAddress,
@@ -79,6 +78,17 @@ namespace Marketplace.Services
             var result = this.context
                 .Orders
                 .Include(x => x.MarketplaceUser)
+                .ProjectTo<TModel>(mapper.ConfigurationProvider);
+
+            return result;
+        }
+
+        public IQueryable<TModel> GetMyOrders<TModel>(string userId)
+        {
+            var result = this.context
+                .Users
+                .Where(x => x.Id == userId)
+                .Select(x => x.Orders)
                 .ProjectTo<TModel>(mapper.ConfigurationProvider);
 
             return result;

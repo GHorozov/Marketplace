@@ -9,5 +9,7 @@ namespace Marketplace.Services.Interfaces
         Task<bool> Create(MarketplaceUser user, string phone, string shippingAddress);
 
         IQueryable<TModel> GetAllOrders<TModel>();
+
+        IQueryable<TModel> GetMyOrders<TModel>(string userId);
     }
 }
