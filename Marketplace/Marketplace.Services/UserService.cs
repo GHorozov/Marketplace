@@ -5,10 +5,8 @@ using Marketplace.Domain;
 using Marketplace.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Marketplace.Services
@@ -80,12 +78,7 @@ namespace Marketplace.Services
 
         public async Task<IdentityResult> ChangePassword(string id, string password)
         {
-            var user = await this.context
-                .Users
-                .Where(x => x.Id == id)
-                .SingleOrDefaultAsync();
-                
-
+            var user = await this.userManager.FindByIdAsync(id);
             var token = await this.userManager.GeneratePasswordResetTokenAsync(user);
             var result = await this.userManager.ResetPasswordAsync(user, token, password);
 
